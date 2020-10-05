@@ -2,7 +2,7 @@
   var templateLibrary = new PlugIn.Library(new Version("1.0"));
 
   templateLibrary.createFromTemplate = () => {
-    // select template to use - show form
+    // select template to use and destination - show form
     let templateFolder = foldersMatching("Templates")[0];
     let templateProjects = templateFolder.flattenedProjects;
 
@@ -10,9 +10,21 @@
     templateForm.addField(
       new Form.Field.Option(
         "template",
-        null,
+        "Template",
         templateProjects,
         templateProjects.map((project) => project.name),
+        null
+      )
+    );
+    let activeFolders = flattenedFolders.filter(
+      (folder) => folder.status === Folder.Status.Active
+    );
+    templateForm.addField(
+      new Form.Field.Option(
+        "destination",
+        "Destination",
+        activeFolders,
+        activeFolders.map((folder) => folder.name),
         null
       )
     );
@@ -21,6 +33,7 @@
 
     templateFormPromise.then(function (form) {
       console.log(form.values["template"]);
+      console.log(form.values["destination"]);
     });
 
     /*
