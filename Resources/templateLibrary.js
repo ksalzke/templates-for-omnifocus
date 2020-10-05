@@ -32,17 +32,14 @@
     templateFormPromise = templateForm.show("Choose Template", "Create");
 
     templateFormPromise.then(function (form) {
-      console.log(form.values["template"]);
-      console.log(form.values["destination"]);
+      // Make a copy of template in specified location
+      let newProject = duplicateSections(
+        [form.values["template"]],
+        form.values["destination"]
+      )[0];
     });
 
     /*
-    templateToUse = folderNamed("Templates").projectNamed("2019 YE: $Client");
-    parentFolder = folderNamed("Templates");
-
-    // Make a copy of template in specified location
-    createdProject = duplicateSections([templateToUse], parentFolder)[0];
-
     // Identify text variables declared in template task note
     regex = /(\$.+);
     textVariables = templateToUse.task.note.match(regex);
