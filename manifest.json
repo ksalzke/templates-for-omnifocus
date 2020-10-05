@@ -7,8 +7,7 @@
   "actions": [
     {
       "identifier": "createFromTemplate"
-    },
-    { "identifier": "secondAction" }
+    }
   ],
   "libraries": [
     {

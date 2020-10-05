@@ -8,7 +8,7 @@ _Please note that all scripts on my GitHub account (or shared elsewhere) are wor
 
 ## Known issues 
 
-* There is an extra second action included in this bundle. This is not intended for use, but is included so that the actual action is shown in the menu on macOS.
+None so far! 🤞
 
 # Installation & Set-Up
 
