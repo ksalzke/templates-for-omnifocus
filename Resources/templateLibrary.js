@@ -37,35 +37,35 @@
         [form.values["template"]],
         form.values["destination"]
       )[0];
-    });
 
-    /*
-    // Identify text variables declared in template task note
-    regex = /(\$.+);
-    textVariables = templateToUse.task.note.match(regex);
-    console.log(textVariables);
-    textVariables.forEach((variable) => {
-      textPromptAndReplace(createdProject, variable);
+      // Identify text variables declared in template task note
+      let placeholders = [...newProject.note.matchAll(/«(.*?)»/g)];
+      console.log(placeholders);
+      placeholders = placeholders.map((array) => array[1]);
+      placeholders.forEach((placeholder) => {
+        console.log(placeholder);
+        promptAndReplace(newProject, placeholder);
+      });
     });
 
     // Replace text variables
-    function textPromptAndReplace(createdProject, variable) {
+    function promptAndReplace(project, variable) {
       form = new Form();
       textField = new Form.Field.String(variable, variable, null);
       form.addField(textField);
-      formPrompt = "Enter variable value:";
+      formPrompt = "Enter value for variable:";
       formPromise = form.show(formPrompt, "Continue");
 
       formPromise.then(function (formObject) {
-        replaceTextVariable(createdProject, variable, formObject(variable));
+        replaceTextVariable(project, variable, formObject.values[variable]);
       });
     }
 
-    replaceTextVariable = (createdProject, variable, replacement) => {
-      createdProject.task.apply((tsk) => {
-        tsk.name = tsk.name.replace(variable, replacement);
+    replaceTextVariable = (project, variable, replacement) => {
+      project.task.apply((tsk) => {
+        tsk.name = tsk.name.replace(`«${variable}»`, replacement);
       });
-    }; */
+    };
   };
 
   return templateLibrary;
