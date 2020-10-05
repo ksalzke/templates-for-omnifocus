@@ -44,7 +44,7 @@ This action can be run when no projects or tasks are selected. It:
 
 # Functions
 
-This plugin contains the following function within the `templateLibrary` library:
+This plugin contains the following functions within the `templateLibrary` library:
 
 ## getDestination
 
