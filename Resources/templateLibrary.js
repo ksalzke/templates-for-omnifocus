@@ -31,48 +31,5 @@
     }
   };
 
-  templateLibrary.newFromTemplate = () => {
-    function generateTemplateForm() {
-      // select template to use and destination - show form
-      let templateFolder = foldersMatching("Templates")[0];
-      let templateProjects = templateFolder.flattenedProjects;
-
-      let templateForm = new Form();
-      templateForm.addField(
-        new Form.Field.Option(
-          "template",
-          "Template",
-          templateProjects,
-          templateProjects.map((project) => project.name),
-          null
-        )
-      );
-      let activeFolders = flattenedFolders.filter(
-        (folder) => folder.status === Folder.Status.Active
-      );
-      templateForm.addField(
-        new Form.Field.Option(
-          "destination",
-          "Destination",
-          activeFolders,
-          activeFolders.map((folder) => folder.name),
-          null
-        )
-      );
-      return templateForm;
-    }
-    templateFormPromise = generateTemplateForm().show(
-      "Choose Template",
-      "Create"
-    );
-
-    templateFormPromise.then(function (form) {
-      templateLibrary.createFromTemplate(
-        form.values["template"],
-        form.values["destination"]
-      );
-    });
-  };
-
   return templateLibrary;
 })();
