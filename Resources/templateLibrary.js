@@ -2,10 +2,10 @@
   var templateLibrary = new PlugIn.Library(new Version("1.0"));
 
   templateLibrary.createFromTemplate = (template, destination) => {
-    // Create new project
+    // CREATE NEW PROJECT
     let newProject = duplicateSections([template], destination)[0];
 
-    // Identify and replace text variables declared in template task note
+    // IDENTIFY AND REPLACE TEXT VARIABLES DECLARED IN TEMPLATE TASK NOTE
     let placeholders = [...newProject.note.matchAll(/«(.*?)»/g)];
     placeholders = placeholders.map((array) => array[1]);
     placeholders.forEach((placeholder) => {
@@ -18,16 +18,24 @@
       formPromise = form.show("Enter value for placeholder:", "Continue");
 
       formPromise.then(function (formObject) {
+        // tag information
+        let placeholderTag = tagsMatching(`«${placeholder}»`)[0];
+        let replacement = formObject.values[placeholder];
+        let replacementTag =
+          tagsMatching(replacement)[0] || new Tag(replacement);
         project.task.apply((tsk) => {
-          tsk.name = tsk.name.replace(
-            `«${placeholder}»`,
-            formObject.values[placeholder]
-          );
+          // replace in task names
+          tsk.name = tsk.name.replace(`«${placeholder}»`, replacement);
+          // replace tags
+          if (tsk.tags.includes(placeholderTag)) {
+            tsk.removeTag(placeholderTag);
+            tsk.addTag(replacementTag);
+          }
         });
       });
     }
 
-    // Adjust dates
+    // ADJUST DATES
     function adjustDates(oldDate, newDate, project) {
       let difference = Calendar.current.dateComponentsBetweenDates(
         oldDate,
