@@ -5,7 +5,7 @@
 
     templateLibrary = this.templateLibrary;
 
-    templateLibrary.createFromTemplate();
+    templateLibrary.newFromTemplate();
   });
 
   action.validate = function (selection, sender) {
