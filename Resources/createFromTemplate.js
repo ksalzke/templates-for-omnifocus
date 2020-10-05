@@ -1,5 +1,5 @@
 (() => {
-  var action = new PlugIn.Action(function (selection, sender) {
+  var action = new PlugIn.Action(async function (selection, sender) {
     // action code
     // selection options: tasks, projects, folders, tags
 
@@ -10,11 +10,11 @@
       "Create"
     );
 
-    templateFormPromise.then(function (form) {
-      templateLibrary.createFromTemplate(
-        form.values["template"],
-        form.values["destination"]
+    templateFormPromise.then(async function (form) {
+      let destination = await templateLibrary.getDestination(
+        form.values["template"]
       );
+      templateLibrary.createFromTemplate(form.values["template"], destination);
     });
 
     function generateTemplateForm() {
@@ -29,18 +29,6 @@
           "Template",
           templateProjects,
           templateProjects.map((project) => project.name),
-          null
-        )
-      );
-      let activeFolders = flattenedFolders.filter(
-        (folder) => folder.status === Folder.Status.Active
-      );
-      templateForm.addField(
-        new Form.Field.Option(
-          "destination",
-          "Destination",
-          activeFolders,
-          activeFolders.map((folder) => folder.name),
           null
         )
       );

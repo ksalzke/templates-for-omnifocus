@@ -1,6 +1,32 @@
 (() => {
   var templateLibrary = new PlugIn.Library(new Version("1.0"));
 
+  templateLibrary.getDestination = async (template) => {
+    // find folder from string, if there is a destination
+    if (template.note.match(/\$FOLDER=(.*?)$/m) !== null) {
+      console.log("destination not null");
+      return foldersMatching(template.note.match(/\$FOLDER=(.*?)$/m)[1])[0];
+    } else {
+      // otherwise, show form to user to select
+      console.log("in else");
+      let destinationForm = new Form();
+      let activeFolders = flattenedFolders.filter(
+        (folder) => folder.status === Folder.Status.Active
+      );
+      destinationForm.addField(
+        new Form.Field.Option(
+          "destination",
+          "Destination",
+          activeFolders,
+          activeFolders.map((folder) => folder.name),
+          null
+        )
+      );
+      await destinationForm.show("Choose Destination", "Continue");
+      return destinationForm.values["destination"];
+    }
+  };
+
   templateLibrary.createFromTemplate = (template, destination) => {
     // CREATE NEW PROJECT
     let newProject = duplicateSections([template], destination)[0];
