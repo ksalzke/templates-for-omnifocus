@@ -4,7 +4,6 @@
   templateLibrary.getDestination = async (template) => {
     // find folder from string, if there is a destination
     if (template.note.match(/\$FOLDER=(.*?)$/m) !== null) {
-      console.log("destination not null");
       return foldersMatching(template.note.match(/\$FOLDER=(.*?)$/m)[1])[0];
     } else {
       // otherwise, show form to user to select
@@ -27,38 +26,54 @@
     }
   };
 
-  templateLibrary.createFromTemplate = (template, destination) => {
+  templateLibrary.createFromTemplate = async (template, destination) => {
     // CREATE NEW PROJECT
     let newProject = duplicateSections([template], destination)[0];
 
     // IDENTIFY AND REPLACE TEXT VARIABLES DECLARED IN TEMPLATE TASK NOTE
-    let placeholders = [...newProject.note.matchAll(/«(.*?)»/g)];
-    placeholders = placeholders.map((array) => array[1]);
-    placeholders.forEach((placeholder) => {
-      promptAndReplace(newProject, placeholder);
+    // value specified
+    let specifiedPlaceholders = [
+      ...newProject.note.matchAll(/«(.*?)»\:(.*?)$/gm),
+    ];
+    specifiedPlaceholders.forEach((placeholder) => {
+      replace(newProject, placeholder[1], placeholder[2]);
     });
 
-    function promptAndReplace(project, placeholder) {
-      form = new Form();
-      form.addField(new Form.Field.String(placeholder, placeholder, null));
-      formPromise = form.show("Enter value for placeholder:", "Continue");
+    // no value specified
+    let placeholders = [...newProject.note.matchAll(/«(.*?)»$/gm)];
+    placeholders = await askForValues(placeholders);
+    placeholders.forEach((placeholder) => {
+      replace(newProject, placeholder[0], placeholder[1]);
+    });
 
-      formPromise.then(function (formObject) {
-        // tag information
-        let placeholderTag = tagsMatching(`«${placeholder}»`)[0];
-        let replacement = formObject.values[placeholder];
-        let replacementTag =
-          tagsMatching(replacement)[0] || new Tag(replacement);
-        project.task.apply((tsk) => {
-          // replace in task names
-          tsk.name = tsk.name.replace(`«${placeholder}»`, replacement);
-          // replace tags
-          if (tsk.tags.includes(placeholderTag)) {
-            tsk.removeTag(placeholderTag);
-            tsk.addTag(replacementTag);
-          }
-        });
+    function replace(project, placeholder, replacement) {
+      // tag information
+      let placeholderTag = tagsMatching(`«${placeholder}»`)[0];
+      let replacementTag = tagsMatching(replacement)[0] || new Tag(replacement);
+      project.task.apply((tsk) => {
+        // replace in task names
+        tsk.name = tsk.name.replace(`«${placeholder}»`, replacement);
+        // replace tags
+        if (tsk.tags.includes(placeholderTag)) {
+          tsk.removeTag(placeholderTag);
+          tsk.addTag(replacementTag);
+        }
       });
+    }
+
+    async function askForValues(placeholders) {
+      form = new Form();
+      placeholders.forEach((placeholder) => {
+        form.addField(
+          new Form.Field.String(placeholder[1], placeholder[1], null)
+        );
+      });
+      await form.show("Enter value for placeholders:", "Continue");
+      valuesList = [];
+      placeholders.forEach((placeholder) => {
+        valuesList.push([placeholder[1], form.values[placeholder[1]]]);
+      });
+      return valuesList;
     }
 
     // ADJUST DATES
