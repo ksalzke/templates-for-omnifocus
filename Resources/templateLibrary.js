@@ -7,17 +7,18 @@
       return foldersMatching(template.note.match(/\$FOLDER=(.*?)$/m)[1])[0];
     } else {
       // otherwise, show form to user to select
-      console.log("in else");
       let destinationForm = new Form();
-      let activeFolders = flattenedFolders.filter(
-        (folder) => folder.status === Folder.Status.Active
+      let activeSections = flattenedSections.filter(
+        (section) =>
+          section.status !== Folder.Status.Active ||
+          section.status !== Project.Status.Active
       );
       destinationForm.addField(
         new Form.Field.Option(
           "destination",
           "Destination",
-          activeFolders,
-          activeFolders.map((folder) => folder.name),
+          activeSections,
+          activeSections.map((folder) => folder.name),
           null
         )
       );
@@ -28,22 +29,27 @@
 
   templateLibrary.createFromTemplate = async (template, destination) => {
     // CREATE NEW PROJECT
-    let newProject = duplicateSections([template], destination)[0];
+    let created, project;
+    if (destination instanceof Project) {
+      created = duplicateTasks(template.tasks, destination)[0];
+      project = destination;
+    } else {
+      created = duplicateSections([template], destination)[0];
+      project = created;
+    }
 
     // IDENTIFY AND REPLACE TEXT VARIABLES DECLARED IN TEMPLATE TASK NOTE
     // value specified
-    let specifiedPlaceholders = [
-      ...newProject.note.matchAll(/«(.*?)»\:(.*?)$/gm),
-    ];
+    let specifiedPlaceholders = [...project.note.matchAll(/«(.*?)»\:(.*?)$/gm)];
     specifiedPlaceholders.forEach((placeholder) => {
-      replace(newProject, placeholder[1], placeholder[2]);
+      replace(project, placeholder[1], placeholder[2]);
     });
 
     // no value specified
-    let placeholders = [...newProject.note.matchAll(/«(.*?)»$/gm)];
+    let placeholders = [...project.note.matchAll(/«(.*?)»$/gm)];
     placeholders = await askForValues(placeholders);
     placeholders.forEach((placeholder) => {
-      replace(newProject, placeholder[0], placeholder[1]);
+      replace(project, placeholder[0], placeholder[1]);
     });
 
     function replace(project, placeholder, replacement) {
@@ -106,15 +112,15 @@
     }
 
     let oldDate = null;
-    if (newProject.dueDate !== null || newProject.deferDate !== null) {
+    if (created.dueDate !== null || created.deferDate !== null) {
       let dueForm = new Form();
-      if (newProject.dueDate !== null) {
-        oldDate = newProject.dueDate;
+      if (created.dueDate !== null) {
+        oldDate = created.dueDate;
         dueForm.addField(
           new Form.Field.Date("newDate", "Due date:", oldDate, null)
         );
-      } else if (newProject.deferDate !== null) {
-        oldDate = newProject.deferDate;
+      } else if (created.deferDate !== null) {
+        oldDate = created.deferDate;
         dueForm.addField(
           new Form.Field.Date("newDate", "Defer date:", oldDate, null)
         );
@@ -122,7 +128,7 @@
 
       dueFormPromise = dueForm.show("Date for new project", "Continue");
       dueFormPromise.then((formObject) => {
-        adjustDates(oldDate, formObject.values["newDate"], newProject);
+        adjustDates(oldDate, formObject.values["newDate"], created);
       });
     }
   };

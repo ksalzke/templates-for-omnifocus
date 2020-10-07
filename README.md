@@ -33,6 +33,7 @@ In addition:
 - The folder for the project to be created in can be specified by including the following as its own line within the project note, where 'Folder' is the name of the folder: `$FOLDER=Folder`.
 - Placeholder tags can be used in the same format as other placeholders.
 - You can specify a value to be used for a placeholder by using the format `«Placeholder»:Value`. The user will not be prompted to fill in these fields.
+- If the destination is a project, placeholders in the pre-existing project's note will be used. As these are updated when the original project is created (assuming it is created from a template) this allows for the same values to be re-used without having to be entered a second time.
 
 # Actions
 
@@ -56,14 +57,15 @@ This function takes a template as input and returns the parent folder to be used
 
 ## createFromTemplate
 
-This function takes a template and a destination (e.g. a folder, though this can be any location in the database) as input. It:
+This function takes a template and a destination (a folder or project) as input. It:
 
 1. Copies the template to the specified destination.
-2. For each placeholder where a value is specified (in the form `«Placeholder»:Value`):
-   - Replaces all instances of that placeholder in the project/task names
-   - If there are any tags in this format, replaces these with the best match (if there are no matches found, a tag will be created, but note that this uses Omnifocus' built-in search so if there is a similar tag this may be applied instead)
-3. For each placeholder (in the form `«Placeholder»`), prompts the user for a replacement value, and:
-   - Replaces all instances of that placeholder in the project/task names
-   - If there are any tags in this format, replaces these with the best match (if there are no matches found, a tag will be created, but note that this uses Omnifocus' built-in search so if there is a similar tag this may be applied instead)
-   - Includes the replacement value in the note of the created project (in the form `«Placeholder»:Value`)
-4. If the template project has a due date, prompts the user for a new due date and adjusts the dates of all tasks within the project accordingly. If there is no due date but there is a defer date, this is used instead.
+2. For the newly created project, or for the project that the template is duplicated to:
+   1. For each placeholder where a value is specified (in the form `«Placeholder»:Value`):
+      - Replaces all instances of that placeholder in the project/task names
+      - If there are any tags in this format, replaces these with the best match (if there are no matches found, a tag will be created, but note that this uses Omnifocus' built-in search so if there is a similar tag this may be applied instead)
+   2. For each placeholder (in the form `«Placeholder»`), prompts the user for a replacement value, and:
+      - Replaces all instances of that placeholder in the project/task names
+      - If there are any tags in this format, replaces these with the best match (if there are no matches found, a tag will be created, but note that this uses Omnifocus' built-in search so if there is a similar tag this may be applied instead)
+      - Includes the replacement value in the note of the created project (in the form `«Placeholder»:Value`)
+3. If the template project has a due date, prompts the user for a new due date and adjusts the dates of all tasks within the created project/action group accordingly. If there is no due date but there is a defer date, this is used instead.
