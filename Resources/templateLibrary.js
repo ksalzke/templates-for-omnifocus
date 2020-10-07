@@ -47,6 +47,11 @@
     });
 
     function replace(project, placeholder, replacement) {
+      let regex = new RegExp(`«${placeholder}».*$`, "gm");
+      project.note = project.note.replace(
+        regex,
+        `«${placeholder}»:${replacement}`
+      );
       // tag information
       let placeholderTag = tagsMatching(`«${placeholder}»`)[0];
       let replacementTag = tagsMatching(replacement)[0] || new Tag(replacement);

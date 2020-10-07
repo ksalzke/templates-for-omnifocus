@@ -65,4 +65,5 @@ This function takes a template and a destination (e.g. a folder, though this can
 3. For each placeholder (in the form `«Placeholder»`), prompts the user for a replacement value, and:
    - Replaces all instances of that placeholder in the project/task names
    - If there are any tags in this format, replaces these with the best match (if there are no matches found, a tag will be created, but note that this uses Omnifocus' built-in search so if there is a similar tag this may be applied instead)
+   - Includes the replacement value in the note of the created project (in the form `«Placeholder»:Value`)
 4. If the template project has a due date, prompts the user for a new due date and adjusts the dates of all tasks within the project accordingly. If there is no due date but there is a defer date, this is used instead.
