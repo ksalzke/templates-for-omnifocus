@@ -8,7 +8,7 @@ _Please note that all scripts on my GitHub account (or shared elsewhere) are wor
 
 ## Known issues
 
-None so far! 🤞
+- If no placeholders are included in the template's note, the script won't currently prompt the user for a due/defer date when it should. This is a bug.
 
 # Installation & Set-Up
 
