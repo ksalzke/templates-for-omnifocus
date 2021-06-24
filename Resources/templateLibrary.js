@@ -40,17 +40,31 @@
 
     // IDENTIFY AND REPLACE TEXT VARIABLES DECLARED IN TEMPLATE TASK NOTE
     // value specified
-    let specifiedPlaceholders = [...project.note.matchAll(/«(.*?)»\:(.*?)$/gm)];
-    specifiedPlaceholders.forEach((placeholder) => {
-      replace(project, placeholder[1], placeholder[2]);
-    });
+    let iterator1 = project.note.matchAll(/«(.*?)»\:(.*?)$/gm);
+    if (typeof iterator1[Symbol.iterator] === "function") {
+      let specifiedPlaceholders = [...iterator1];
+      if (specifiedPlaceholders !== null) {
+        specifiedPlaceholders.forEach((placeholder) => {
+          replace(project, placeholder[1], placeholder[2]);
+        });
+      }
+    }
 
     // no value specified
-    let placeholders = [...project.note.matchAll(/«(.*?)»$/gm)];
-    placeholders = await askForValues(placeholders);
-    placeholders.forEach((placeholder) => {
-      replace(project, placeholder[0], placeholder[1]);
-    });
+    let iterator2 = project.note.matchAll(/«(.*?)»$/gm);
+    if (
+      iterator2 !== null &&
+      typeof iterator2[Symbol.iterator] === "function"
+    ) {
+      console.log("in if and shouldn't be...");
+      let placeholders = [...iterator2];
+      if (placeholders !== null) {
+        placeholders = await askForValues(placeholders);
+        placeholders.forEach((placeholder) => {
+          replace(project, placeholder[0], placeholder[1]);
+        });
+      }
+    }
 
     function replace(project, placeholder, replacement) {
       let regex = new RegExp(`«${placeholder}».*$`, "gm");
