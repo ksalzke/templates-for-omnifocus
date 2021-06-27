@@ -38,6 +38,7 @@
       created = duplicateSections([template], destination)[0]
       project = created
     }
+    created.status = Project.Status.Active // make status active
 
     // IDENTIFY AND REPLACE TEXT VARIABLES DECLARED IN TEMPLATE TASK NOTE
     // value specified

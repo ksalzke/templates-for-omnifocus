@@ -59,7 +59,7 @@ This function takes a template as input and returns the parent folder to be used
 
 This function takes a template and a destination (a folder or project) as input. It:
 
-1. Copies the template to the specified destination.
+1. Copies the template to the specified destination and makes it active.
 2. For the newly created project, or for the project that the template is duplicated to:
    1. For each placeholder where a value is specified (in the form `«Placeholder»:Value`):
       - Replaces all instances of that placeholder in the project/task names
