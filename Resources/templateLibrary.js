@@ -1,4 +1,4 @@
-/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections tagsMatching Tag Calendar */
+/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections tagsMatching Tag Calendar deleteObject */
 (() => {
   const templateLibrary = new PlugIn.Library(new Version('1.0'))
 
@@ -39,6 +39,10 @@
       project = created
     }
     created.status = Project.Status.Active // make status active
+
+    // ASK ABOUT OPTIONAL TASKS
+    const optTasks = project.flattenedTasks.filter(task => task.note.includes('$OPTIONAL'))
+    askAboutOptionalTasks(optTasks)
 
     // IDENTIFY AND REPLACE TEXT VARIABLES DECLARED IN TEMPLATE TASK NOTE
     // value specified
@@ -101,6 +105,13 @@
         valuesList.push([placeholder[1], form.values[placeholder[1]]])
       })
       return valuesList
+    }
+
+    async function askAboutOptionalTasks (tasks) {
+      const form = new Form()
+      tasks.forEach(task => form.addField(new Form.Field.Checkbox(task.name, task.name, true)))
+      await form.show('Do you want to include the following tasks?', 'Continue')
+      tasks.forEach(task => { if (form.values[task.name] === false) { deleteObject(task) } else task.note = task.note.replace('$OPTIONAL', '') })
     }
 
     // ADJUST DATES

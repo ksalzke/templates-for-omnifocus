@@ -64,7 +64,10 @@ This function takes a template and a destination (a folder or project) as input.
    1. For each placeholder where a value is specified (in the form `«Placeholder»:Value`):
       - Replaces all instances of that placeholder in the project/task names
       - If there are any tags in this format, replaces these with the best match (if there are no matches found, a tag will be created, but note that this uses Omnifocus' built-in search so if there is a similar tag this may be applied instead)
-   2. For each placeholder (in the form `«Placeholder»`), prompts the user for a replacement value, and:
+   2. For any task that includes `$OPTIONAL` in its note, prompts the user to ask whether they want to include the task or not, and:
+      - If they don't want the task included, deletes the task (and any of its subtasks)
+      - If they do want the task included, removes the `$OPTIONAL` annotation from its note
+   3. For each placeholder (in the form `«Placeholder»`), prompts the user for a replacement value, and:
       - Replaces all instances of that placeholder in the project/task names
       - If there are any tags in this format, replaces these with the best match (if there are no matches found, a tag will be created, but note that this uses Omnifocus' built-in search so if there is a similar tag this may be applied instead)
       - Includes the replacement value in the note of the created project (in the form `«Placeholder»:Value`)
