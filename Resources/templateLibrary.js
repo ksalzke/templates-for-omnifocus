@@ -10,7 +10,7 @@
       // otherwise, show form to user to select
       const destinationForm = new Form()
       // project checkbox
-      let projectsBoxChecked = true
+      let projectsBoxChecked = false
       destinationForm.addField(new Form.Field.Checkbox('projectsIncluded', 'Include projects', projectsBoxChecked))
       // destination dropdown
       const activeSections = flattenedSections.filter(
@@ -20,31 +20,40 @@
       )
       const activeFolders = flattenedFolders.filter(folder => folder.status === Folder.Status.Active)
 
-      const destinationOptions = new Form.Field.Option(
+      let destinationOptions = new Form.Field.Option(
         'destination',
         'Destination',
         [library.ending, ...activeFolders],
         ['Top Level', ...activeFolders.map((section) => section instanceof Folder ? `📁 ${section.name}` : `—${section.name}`)],
         null
       )
-      const destinationOptionsWithProjects = new Form.Field.Option(
-        'destination',
-        'Destination',
-        [library.ending, ...activeSections],
-        ['Top Level', ...activeSections.map((section) => section instanceof Folder ? `📁 ${section.name}` : `—${section.name}`)],
-        null
-      )
       destinationOptions.allowsNull = true
-      destinationForm.addField(destinationOptionsWithProjects)
+      destinationForm.addField(destinationOptions)
 
       destinationForm.validate = (formObject) => {
         if (formObject.values.projectsIncluded !== projectsBoxChecked) {
           projectsBoxChecked = formObject.values.projectsIncluded
           if (formObject.values.projectsIncluded) {
             destinationForm.removeField(destinationOptions)
-            destinationForm.addField(destinationOptionsWithProjects)
+            destinationOptions = new Form.Field.Option(
+              'destination',
+              'Destination',
+              [library.ending, ...activeSections],
+              ['Top Level', ...activeSections.map((section) => section instanceof Folder ? `📁 ${section.name}` : `—${section.name}`)],
+              null
+            )
+            destinationOptions.allowsNull = true
+            destinationForm.addField(destinationOptions)
           } else {
-            destinationForm.removeField(destinationOptionsWithProjects)
+            destinationForm.removeField(destinationOptions)
+            destinationOptions = new Form.Field.Option(
+              'destination',
+              'Destination',
+              [library.ending, ...activeFolders],
+              ['Top Level', ...activeFolders.map((section) => section instanceof Folder ? `📁 ${section.name}` : `—${section.name}`)],
+              null
+            )
+            destinationOptions.allowsNull = true
             destinationForm.addField(destinationOptions)
           }
         }
