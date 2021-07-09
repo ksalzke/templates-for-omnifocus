@@ -19,7 +19,7 @@
           'destination',
           'Destination',
           activeSections,
-          activeSections.map((folder) => folder.name),
+          activeSections.map((section) => section instanceof Folder ? `📁 ${section.name}` : `—${section.name}`),
           null
         )
       )
