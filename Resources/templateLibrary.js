@@ -1,4 +1,4 @@
-/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections tagsMatching Tag Calendar deleteObject library */
+/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections tagsMatching Tag Calendar deleteObject library flattenedFolders */
 (() => {
   const templateLibrary = new PlugIn.Library(new Version('1.0'))
 
@@ -9,12 +9,25 @@
     } else {
       // otherwise, show form to user to select
       const destinationForm = new Form()
+      // project checkbox
+      let projectsBoxChecked = true
+      destinationForm.addField(new Form.Field.Checkbox('projectsIncluded', 'Include projects', projectsBoxChecked))
+      // destination dropdown
       const activeSections = flattenedSections.filter(
         (section) =>
           section.status === Folder.Status.Active ||
           section.status === Project.Status.Active
       )
+      const activeFolders = flattenedFolders.filter(folder => folder.status === Folder.Status.Active)
+
       const destinationOptions = new Form.Field.Option(
+        'destination',
+        'Destination',
+        [library.ending, ...activeFolders],
+        ['Top Level', ...activeFolders.map((section) => section instanceof Folder ? `📁 ${section.name}` : `—${section.name}`)],
+        null
+      )
+      const destinationOptionsWithProjects = new Form.Field.Option(
         'destination',
         'Destination',
         [library.ending, ...activeSections],
@@ -22,7 +35,21 @@
         null
       )
       destinationOptions.allowsNull = true
-      destinationForm.addField(destinationOptions)
+      destinationForm.addField(destinationOptionsWithProjects)
+
+      destinationForm.validate = (formObject) => {
+        if (formObject.values.projectsIncluded !== projectsBoxChecked) {
+          projectsBoxChecked = formObject.values.projectsIncluded
+          if (formObject.values.projectsIncluded) {
+            destinationForm.removeField(destinationOptions)
+            destinationForm.addField(destinationOptionsWithProjects)
+          } else {
+            destinationForm.removeField(destinationOptionsWithProjects)
+            destinationForm.addField(destinationOptions)
+          }
+        }
+      }
+
       await destinationForm.show('Choose Destination', 'Continue')
       return destinationForm.values.destination
     }
