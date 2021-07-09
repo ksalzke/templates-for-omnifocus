@@ -11,8 +11,8 @@
       const destinationForm = new Form()
       const activeSections = flattenedSections.filter(
         (section) =>
-          section.status !== Folder.Status.Active ||
-          section.status !== Project.Status.Active
+          section.status === Folder.Status.Active ||
+          section.status === Project.Status.Active
       )
       destinationForm.addField(
         new Form.Field.Option(
