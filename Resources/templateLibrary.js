@@ -1,4 +1,4 @@
-/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections tagsMatching Tag Calendar deleteObject */
+/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections tagsMatching Tag Calendar deleteObject library */
 (() => {
   const templateLibrary = new PlugIn.Library(new Version('1.0'))
 
@@ -14,15 +14,15 @@
           section.status === Folder.Status.Active ||
           section.status === Project.Status.Active
       )
-      destinationForm.addField(
-        new Form.Field.Option(
-          'destination',
-          'Destination',
-          activeSections,
-          activeSections.map((section) => section instanceof Folder ? `📁 ${section.name}` : `—${section.name}`),
-          null
-        )
+      const destinationOptions = new Form.Field.Option(
+        'destination',
+        'Destination',
+        [library.ending, ...activeSections],
+        ['Top Level', ...activeSections.map((section) => section instanceof Folder ? `📁 ${section.name}` : `—${section.name}`)],
+        null
       )
+      destinationOptions.allowsNull = true
+      destinationForm.addField(destinationOptions)
       await destinationForm.show('Choose Destination', 'Continue')
       return destinationForm.values.destination
     }
