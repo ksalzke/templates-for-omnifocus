@@ -1,4 +1,4 @@
-/* global PlugIn foldersMatching Form */
+/* global PlugIn foldersMatching Form Preferences */
 (() => {
   const action = new PlugIn.Action(async function (selection, sender) {
     // action code
@@ -38,8 +38,11 @@
   })
 
   action.validate = function (selection, sender) {
-    // only valid if nothing is selected - so does not show in share menu
-    return selection.tasks.length === 0 && selection.projects.length === 0
+    // load preferences
+    const preferences = new Preferences('com.KaitlinSalzke.Templates')
+
+    // show if preferences are set to always enabled or if nothing is selected
+    return preferences.readBoolean('alwaysEnable') || (selection.tasks.length === 0 && selection.projects.length === 0)
   }
 
   return action
