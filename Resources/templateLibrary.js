@@ -50,19 +50,19 @@
   }
 
   templateLibrary.createFromTemplate = async (template, destination) => {
-    // CREATE NEW PROJECT
+    // create from template
     let created, project
     if (destination instanceof Project) {
-      created = duplicateTasks(template.tasks, destination)[0]
+      created = duplicateTasks([template.task], destination)[0]
       project = destination
     } else {
       created = duplicateSections([template], destination)[0]
       project = created
+      project.status = Project.Status.Active // make status active if not already
     }
-    created.status = Project.Status.Active // make status active
 
     // ASK ABOUT OPTIONAL TASKS
-    const optTasks = project.flattenedTasks.filter(task => task.note.includes('$OPTIONAL'))
+    const optTasks = created.flattenedTasks.filter(task => task.note.includes('$OPTIONAL'))
     askAboutOptionalTasks(optTasks)
 
     // IDENTIFY AND REPLACE TEXT VARIABLES DECLARED IN TEMPLATE TASK NOTE
