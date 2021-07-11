@@ -8,7 +8,7 @@ _Please note that all scripts on my GitHub account (or shared elsewhere) are wor
 
 ## Known issues
 
-- If no placeholders are included in the template's note, the script won't currently prompt the user for a due/defer date when it should. This is a bug.
+Refer to the 'issues' in this repo for known issues and planned changes/enhancements.
 
 # Installation & Set-Up
 
@@ -68,7 +68,7 @@ This function takes a template as input and returns the parent folder to be used
 
 This function takes a template and a destination (a folder or project) as input. It:
 
-1. Copies the template to the specified destination and makes it active.
+1. Copies the template to the specified destination and makes it active. (If the template is copied to a project it is created as an action group.)
 2. For the newly created project, or for the project that the template is duplicated to:
    1. For each placeholder where a value is specified (in the form `«Placeholder»:Value`):
       - Replaces all instances of that placeholder in the project/task names
@@ -80,4 +80,5 @@ This function takes a template and a destination (a folder or project) as input.
       - Replaces all instances of that placeholder in the project/task names
       - If there are any tags in this format, replaces these with the best match (if there are no matches found, a tag will be created, but note that this uses Omnifocus' built-in search so if there is a similar tag this may be applied instead)
       - Includes the replacement value in the note of the created project (in the form `«Placeholder»:Value`)
+      - _Note:_ If a template is copied to an existing project, any placeholders in the project's note will be used first before prompting for further information.
 3. If the template project has a due date, prompts the user for a new due date and adjusts the dates of all tasks within the created project/action group accordingly. If there is no due date but there is a defer date, this is used instead.
