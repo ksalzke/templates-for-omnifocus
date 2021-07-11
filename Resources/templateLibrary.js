@@ -66,32 +66,42 @@
     askAboutOptionalTasks(optTasks)
 
     // IDENTIFY AND REPLACE TEXT VARIABLES DECLARED IN TEMPLATE TASK NOTE
-    // value specified
-    const iterator1 = project.note.matchAll(/«(.*?)»:(.*?)$/gm)
-    if (typeof iterator1[Symbol.iterator] === 'function') {
-      const specifiedPlaceholders = [...iterator1]
-      if (specifiedPlaceholders !== null) {
-        specifiedPlaceholders.forEach((placeholder) => {
-          replace(project, placeholder[1], placeholder[2])
-        })
+
+    /* match and replace placeholders with values specified in specific task's note */
+    function replaceValuesSpecifiedIn (task) {
+      const iterator1 = task.note.matchAll(/«(.*?)»:(.*?)$/gm)
+      if (typeof iterator1[Symbol.iterator] === 'function') {
+        const specifiedPlaceholders = [...iterator1]
+        if (specifiedPlaceholders !== null) {
+          specifiedPlaceholders.forEach((placeholder) => {
+            replace(project, placeholder[1], placeholder[2])
+          })
+        }
       }
     }
 
-    // no value specified
-    const iterator2 = project.note.matchAll(/«(.*?)»$/gm)
-    if (
-      iterator2 !== null &&
-      typeof iterator2[Symbol.iterator] === 'function'
-    ) {
-      console.log("in if and shouldn't be...")
-      let placeholders = [...iterator2]
-      if (placeholders !== null) {
-        placeholders = await askForValues(placeholders)
-        placeholders.forEach((placeholder) => {
-          replace(project, placeholder[0], placeholder[1])
-        })
+    async function replaceValuesNotSpecifiedIn (task) {
+      const iterator2 = task.note.matchAll(/«(.*?)»$/gm)
+      if (
+        iterator2 !== null &&
+        typeof iterator2[Symbol.iterator] === 'function'
+      ) {
+        let placeholders = [...iterator2]
+        if (placeholders !== null) {
+          placeholders = await askForValues(placeholders)
+          placeholders.forEach((placeholder) => {
+            replace(project, placeholder[0], placeholder[1])
+          })
+        }
       }
     }
+
+    // replace with values from project, then from created group
+    replaceValuesSpecifiedIn(project.task)
+    replaceValuesSpecifiedIn(created)
+
+    // no value specified
+    replaceValuesNotSpecifiedIn(created)
 
     function replace (project, placeholder, replacement) {
       const regex = new RegExp(`«${placeholder}».*$`, 'gm')
