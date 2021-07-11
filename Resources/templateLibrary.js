@@ -77,10 +77,11 @@
             replace(project, placeholder[1], placeholder[2])
           })
         }
-      }
+        return specifiedPlaceholders.map(placeholder => placeholder[1])
+      } else return []
     }
 
-    async function replaceValuesNotSpecifiedIn (task) {
+    async function replaceValuesNotSpecifiedIn (task, alreadyKnownValues) {
       const iterator2 = task.note.matchAll(/«(.*?)»$/gm)
       if (
         iterator2 !== null &&
@@ -88,7 +89,8 @@
       ) {
         let placeholders = [...iterator2]
         if (placeholders !== null) {
-          placeholders = await askForValues(placeholders)
+          const unknownPlaceholders = placeholders.map(placeholder => placeholder[1]).filter(placeholder => !alreadyKnownValues.includes(placeholder))
+          placeholders = await askForValues(unknownPlaceholders)
           placeholders.forEach((placeholder) => {
             replace(project, placeholder[0], placeholder[1])
           })
@@ -97,11 +99,11 @@
     }
 
     // replace with values from project, then from created group
-    replaceValuesSpecifiedIn(project.task)
-    replaceValuesSpecifiedIn(created)
+    let knownPlaceholders = replaceValuesSpecifiedIn(project.task)
+    knownPlaceholders = knownPlaceholders.concat(replaceValuesSpecifiedIn(created))
 
     // no value specified
-    replaceValuesNotSpecifiedIn(created)
+    replaceValuesNotSpecifiedIn(created, knownPlaceholders)
 
     function replace (project, placeholder, replacement) {
       const regex = new RegExp(`«${placeholder}».*$`, 'gm')
@@ -127,13 +129,13 @@
       const form = new Form()
       placeholders.forEach((placeholder) => {
         form.addField(
-          new Form.Field.String(placeholder[1], placeholder[1], null)
+          new Form.Field.String(placeholder, placeholder, null)
         )
       })
       await form.show('Enter value for placeholders:', 'Continue')
       const valuesList = []
       placeholders.forEach((placeholder) => {
-        valuesList.push([placeholder[1], form.values[placeholder[1]]])
+        valuesList.push([placeholder, form.values[placeholder]])
       })
       return valuesList
     }
@@ -146,14 +148,14 @@
     }
 
     // ADJUST DATES
-    function adjustDates (oldDate, newDate, project) {
+    function adjustDates (oldDate, newDate, task) {
+      if (task instanceof Project) { task = task.task }
       const difference = Calendar.current.dateComponentsBetweenDates(
         oldDate,
         newDate
       )
 
-      project.task.apply((task) => {
-        console.log(task)
+      task.apply((task) => {
         if (task.dueDate !== null) {
           task.dueDate = Calendar.current.dateByAddingDateComponents(
             task.dueDate,
