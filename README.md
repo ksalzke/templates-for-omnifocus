@@ -62,7 +62,7 @@ This plugin contains the following functions within the `templateLibrary` librar
 
 ## getDestination
 
-This function takes a template as input and returns the parent folder to be used for the new project. It first looks for a line in the format `$FOLDER=Folder` in the template project's note, and if this is not found prompts the user to select from a list of active folders.
+This function takes a template as input and returns the parent folder to be used for the new project. It first looks for a line in the format `$FOLDER=Folder` in the template project's note, and if this is not found prompts the user to select from a list of active folders. The user may also select the "Include projects" checkbox to include active projects in the listing, or select 'Top Level' to add the project at the root level, outside of any folders.
 
 ## createFromTemplate
 

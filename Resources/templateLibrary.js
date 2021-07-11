@@ -1,4 +1,4 @@
-/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections tagsMatching Tag Calendar deleteObject */
+/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections tagsMatching Tag Calendar deleteObject library flattenedFolders */
 (() => {
   const templateLibrary = new PlugIn.Library(new Version('1.0'))
 
@@ -9,20 +9,41 @@
     } else {
       // otherwise, show form to user to select
       const destinationForm = new Form()
+      // project checkbox
+      let projectsBoxChecked = false
+      destinationForm.addField(new Form.Field.Checkbox('projectsIncluded', 'Include projects', projectsBoxChecked))
+      // destination dropdown
       const activeSections = flattenedSections.filter(
         (section) =>
-          section.status !== Folder.Status.Active ||
-          section.status !== Project.Status.Active
+          section.status === Folder.Status.Active ||
+          section.status === Project.Status.Active
       )
-      destinationForm.addField(
-        new Form.Field.Option(
+      const activeFolders = flattenedFolders.filter(folder => folder.status === Folder.Status.Active)
+
+      function updateDestinationDropdown (sections) {
+        destinationOptions = new Form.Field.Option(
           'destination',
           'Destination',
-          activeSections,
-          activeSections.map((folder) => folder.name),
+          [library.ending, ...sections],
+          ['Top Level', ...sections.map((section) => section instanceof Folder ? `📁 ${section.name}` : `—${section.name}`)],
           null
         )
-      )
+        destinationOptions.allowsNull = true
+        destinationForm.addField(destinationOptions)
+      }
+
+      let destinationOptions
+      await updateDestinationDropdown(projectsBoxChecked ? activeSections : activeFolders)
+
+      destinationForm.validate = (formObject) => {
+        if (formObject.values.projectsIncluded !== projectsBoxChecked) {
+          projectsBoxChecked = formObject.values.projectsIncluded
+          destinationForm.removeField(destinationOptions)
+          updateDestinationDropdown(formObject.values.projectsIncluded ? activeSections : activeFolders)
+        }
+        return true
+      }
+
       await destinationForm.show('Choose Destination', 'Continue')
       return destinationForm.values.destination
     }
