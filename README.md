@@ -16,6 +16,7 @@ _Please note that all scripts on my GitHub account (or shared elsewhere) are wor
 2. Unzip the downloaded file.
 3. Rename the entire folder to anything you like, with the extension `.omnifocusjs`
 4. Move the resulting file to your OmniFocus plug-in library folder.
+5. Configure your preferences using the `Preferences` action. (Note that to run this action, no tasks can be selected.)
 
 ## Template Folder
 
@@ -37,15 +38,23 @@ In addition:
 
 # Actions
 
-This plug-in contains the following action:
+This plug-in contains the following actions:
 
 ## Create From Template
 
-This action can be run when no projects or tasks are selected. It:
+This action:
 
 1. Prompts the user to select a template (from the projects included in the `Templates` folder).
 2. Uses the `getDestination` function to determine where the new project should be created.
 3. Uses the `createFromTemplate` function to create the new project.
+
+It can optionally only be run when no projects or tasks are selected, by adjusting the `Preferences` (see below).
+
+## Preferences
+
+This action allows the user to set the preferences for the plug-in. Currently, the only available preference is:
+
+* **Always enable action in menu:** If selected, the 'Create From Template' action is always available. Otherwise, it is only available when nothing is selected. _Please note that this setting is device-specific and does not sync between devices._
 
 # Functions
 
