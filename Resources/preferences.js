@@ -5,7 +5,7 @@
 
   const action = new PlugIn.Action(async function (selection, sender) {
     // get current preferences or set defaults if they don't yet exist
-    const alwaysEnable = preferences.readBoolean('alwaysEnable') ? preferences.readBoolean('alwaysEnable') : false
+    const alwaysEnable = preferences.readBoolean('alwaysEnable') ? preferences.readBoolean('alwaysEnable') : true
 
     // create and show form
     const prefForm = new Form()
