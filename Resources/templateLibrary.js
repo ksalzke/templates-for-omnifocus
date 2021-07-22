@@ -1,4 +1,4 @@
-/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections tagsMatching Tag Calendar deleteObject library flattenedFolders flattenedTags */
+/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections Tag Calendar deleteObject library flattenedFolders flattenedTags */
 (() => {
   const templateLibrary = new PlugIn.Library(new Version('1.0'))
 
@@ -106,8 +106,13 @@
         // replace tags
         tsk.tags.forEach(tag => {
           if (tag.name.includes(`«${placeholder}»`)) {
+            // work out what the tag name would be with placeholders replaced
             const replacementTagName = tag.name.replaceAll(`«${placeholder}»`, replacement)
-            const replacementTag = flattenedTags.map(tag => tag.name).includes(replacementTagName) ? tagsMatching(replacementTagName)[0] : new Tag(replacementTagName)
+            // look for a matching tag
+            const matchingTag = flattenedTags.find(tag => tag.name === replacementTagName)
+            // create tag if it doesn't already exist; otherwise use matching tag
+            const replacementTag = matchingTag === undefined ? new Tag(replacementTagName) : matchingTag
+            // update tags
             tsk.removeTag(tag)
             tsk.addTag(replacementTag)
           }
