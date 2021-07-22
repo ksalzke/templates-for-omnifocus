@@ -3,6 +3,7 @@
 This is an Omni Automation plug-in bundle for OmniFocus that generates projects from templates.
 
 _Credit:_ this script draws on the ideas implemented in Curt Clifton's [Populate Template Placeholders](http://curtclifton.net/poptemp) AppleScript.
+Thanks also to Tim Stringer (@timstringer) for numerous bug reports and suggestions for improvement.
 
 _Please note that all scripts on my GitHub account (or shared elsewhere) are works in progress. If you encounter any issues or have any suggestions please let me know--and do please make sure you backup your database before running scripts from an amateur on the internet!)_
 
@@ -32,7 +33,7 @@ As with Curt's original script:
 In addition:
 
 - The folder for the project to be created in can be specified by including the following as its own line within the project note, where 'Folder' is the name of the folder: `$FOLDER=Folder`.
-- Placeholder tags can be used in the same format as other placeholders.
+- Placeholders can also be used within tags. (New tags will be created as needed at the root level.)
 - You can specify a value to be used for a placeholder by using the format `«Placeholder»:Value`. The user will not be prompted to fill in these fields.
 - If the destination is a project, placeholders in the pre-existing project's note will be used. As these are updated when the original project is created (assuming it is created from a template) this allows for the same values to be re-used without having to be entered a second time.
 
@@ -72,13 +73,13 @@ This function takes a template and a destination (a folder or project) as input.
 2. For the newly created project, or for the project that the template is duplicated to:
    1. For each placeholder where a value is specified (in the form `«Placeholder»:Value`):
       - Replaces all instances of that placeholder in the project/task names
-      - If there are any tags in this format, replaces these with the best match (if there are no matches found, a tag will be created, but note that this uses Omnifocus' built-in search so if there is a similar tag this may be applied instead)
+      - If there are any tags that include a placeholder in their name, replaces the tag with a matching tag. (If there is no matching tag found, a new tag will be created at the top level.)
    2. For any task that includes `$OPTIONAL` in its note, prompts the user to ask whether they want to include the task or not, and:
       - If they don't want the task included, deletes the task (and any of its subtasks)
       - If they do want the task included, removes the `$OPTIONAL` annotation from its note
    3. For each placeholder (in the form `«Placeholder»`), prompts the user for a replacement value, and:
       - Replaces all instances of that placeholder in the project/task names
-      - If there are any tags in this format, replaces these with the best match (if there are no matches found, a tag will be created, but note that this uses Omnifocus' built-in search so if there is a similar tag this may be applied instead)
+      - If there are any tags that include a placeholder in their name, replaces the tag with a matching tag. (If there is no matching tag found, a new tag will be created at the top level.)
       - Includes the replacement value in the note of the created project (in the form `«Placeholder»:Value`)
       - _Note:_ If a template is copied to an existing project, any placeholders in the project's note will be used first before prompting for further information.
 3. If the template project has a due date, prompts the user for a new due date and adjusts the dates of all tasks within the created project/action group accordingly. If there is no due date but there is a defer date, this is used instead.

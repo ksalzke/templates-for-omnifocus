@@ -1,4 +1,4 @@
-/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections tagsMatching Tag Calendar deleteObject library flattenedFolders */
+/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections Tag Calendar deleteObject library flattenedFolders flattenedTags */
 (() => {
   const templateLibrary = new PlugIn.Library(new Version('1.0'))
 
@@ -112,16 +112,23 @@
         `«${placeholder}»:${replacement}`
       )
       // tag information
-      const placeholderTag = tagsMatching(`«${placeholder}»`)[0]
-      const replacementTag = tagsMatching(replacement)[0] || new Tag(replacement)
       project.task.apply((tsk) => {
         // replace in task names
-        tsk.name = tsk.name.replace(`«${placeholder}»`, replacement)
+        tsk.name = tsk.name.replaceAll(`«${placeholder}»`, replacement)
         // replace tags
-        if (tsk.tags.includes(placeholderTag)) {
-          tsk.removeTag(placeholderTag)
-          tsk.addTag(replacementTag)
-        }
+        tsk.tags.forEach(tag => {
+          if (tag.name.includes(`«${placeholder}»`)) {
+            // work out what the tag name would be with placeholders replaced
+            const replacementTagName = tag.name.replaceAll(`«${placeholder}»`, replacement)
+            // look for a matching tag
+            const matchingTag = flattenedTags.find(tag => tag.name === replacementTagName)
+            // create tag if it doesn't already exist; otherwise use matching tag
+            const replacementTag = matchingTag === undefined ? new Tag(replacementTagName) : matchingTag
+            // update tags
+            tsk.removeTag(tag)
+            tsk.addTag(replacementTag)
+          }
+        })
       })
     }
 
