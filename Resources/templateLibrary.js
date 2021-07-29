@@ -107,6 +107,10 @@
 
     function replace (project, placeholder, replacement) {
       const regex = new RegExp(`«${placeholder}».*$`, 'gm')
+      // if replacement isn't defined, use empty string
+      replacement = replacement === undefined ? '' : replacement
+
+      // update project note
       project.note = project.note.replace(
         regex,
         `«${placeholder}»:${replacement}`
