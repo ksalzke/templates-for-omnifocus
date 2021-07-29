@@ -143,12 +143,18 @@
           new Form.Field.String(placeholder, placeholder, null)
         )
       })
-      await form.show('Enter value for placeholders:', 'Continue')
-      const valuesList = []
-      placeholders.forEach((placeholder) => {
-        valuesList.push([placeholder, form.values[placeholder]])
-      })
-      return valuesList
+      try {
+        await form.show('Enter value for placeholders:', 'Continue')
+        const valuesList = []
+        placeholders.forEach((placeholder) => {
+          valuesList.push([placeholder, form.values[placeholder]])
+        })
+        return valuesList
+      } catch (error) {
+        // if placeholder form cancelled, remove the item that was just created
+        deleteObject(created)
+        console.log(`Form cancelled: ${error}`)
+      }
     }
 
     async function askAboutOptionalTasks (tasks) {
