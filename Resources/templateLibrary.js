@@ -1,4 +1,4 @@
-/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections Tag Calendar deleteObject library flattenedFolders flattenedTags */
+/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections Tag Calendar deleteObject library flattenedFolders flattenedTags Formatter */
 (() => {
   const templateLibrary = new PlugIn.Library(new Version('1.0'))
 
@@ -90,7 +90,7 @@
         let placeholders = [...iterator2]
         if (placeholders !== null) {
           const unknownPlaceholders = placeholders.map(placeholder => placeholder[1]).filter(placeholder => !alreadyKnownValues.includes(placeholder))
-          placeholders = await askForValues(unknownPlaceholders)
+          placeholders = unknownPlaceholders.length > 0 ? await askForValues(unknownPlaceholders) : placeholders
           placeholders.forEach((placeholder) => {
             replace(project, placeholder[0], placeholder[1])
           })
@@ -188,6 +188,7 @@
       })
     }
 
+    // backward-compatible method - using assigned dates
     let oldDate = null
     if (created.dueDate !== null || created.deferDate !== null) {
       const dueForm = new Form()
@@ -208,6 +209,14 @@
         adjustDates(oldDate, formObject.values.newDate, created)
       })
     }
+
+    // new method - using date variables
+    const tasksWithDueDates = created.flattenedTasks.filter(task => task.note.includes('$DUE=')).concat(created)
+    tasksWithDueDates.forEach(task => {
+      const dueString = template.note.match(/\$DUE=(.*?)$/m)[1]
+      console.log(dueString)
+      task.dueDate = Formatter.Date.withStyle(Formatter.Date.Style.Full).dateFromString(dueString)
+    })
   }
 
   return templateLibrary
