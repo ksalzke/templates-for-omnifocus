@@ -141,8 +141,10 @@
     async function askForValues (placeholders) {
       const form = new Form()
       placeholders.forEach((placeholder) => {
+        const defaultValue = placeholder.includes('::') ? placeholder.split('::')[1] : null
+        placeholder = placeholder.includes('::') ? placeholder.split('::')[0] : placeholder
         form.addField(
-          new Form.Field.String(placeholder, placeholder, null)
+          new Form.Field.String(placeholder, placeholder, defaultValue)
         )
       })
       try {
