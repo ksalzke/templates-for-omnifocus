@@ -52,13 +52,16 @@
   templateLibrary.createFromTemplate = async (template, destination) => {
     // create from template
     let created, project
-    if (destination instanceof Project) {
-      created = duplicateTasks([template.task], destination)[0]
-      project = destination
-    } else {
+    if (destination instanceof Folder) {
       created = duplicateSections([template], destination)[0]
       project = created
       project.status = Project.Status.Active // make status active if not already
+    } else if (destination instanceof Project) {
+      created = duplicateTasks([template.task], destination)[0]
+      project = destination
+    } else {
+      created = duplicateTasks([template.task], destination)[0]
+      project = created.containingProject
     }
 
     // ASK ABOUT OPTIONAL TASKS
