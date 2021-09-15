@@ -21,7 +21,7 @@ Refer to the 'issues' in this repo for known issues and planned changes/enhancem
 
 ## Template Folder
 
-The plugin looks for a `Templates` folder to use as a basis for the projects that are created.
+The plugin looks for a `Templates` folder to use as a basis for the projects that are created. If the 'Templates' folder is located at the root level (i.e. it is not contained within another folder) then, as with Curt's original script, the folder may be dropped and the script should continue to work as expected.
 
 Templates should be included as projects within that folder (but can be inside subfolders).
 

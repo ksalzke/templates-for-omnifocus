@@ -1,4 +1,4 @@
-/* global PlugIn foldersMatching Form Preferences */
+/* global PlugIn foldersMatching Form Preferences folderNamed */
 (() => {
   const action = new PlugIn.Action(async function (selection, sender) {
     // action code
@@ -20,7 +20,7 @@
 
     function generateTemplateForm () {
       // select template to use and destination - show form
-      const templateFolder = foldersMatching('Templates')[0]
+      const templateFolder = folderNamed('Templates') || foldersMatching('Templates')[0]
       const templateProjects = templateFolder.flattenedProjects
 
       const templateForm = new Form()
