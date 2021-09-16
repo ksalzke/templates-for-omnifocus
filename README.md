@@ -21,7 +21,7 @@ Refer to the 'issues' in this repo for known issues and planned changes/enhancem
 
 ## Template Folder
 
-The plugin looks for a `Templates` folder to use as a basis for the projects that are created. If the 'Templates' folder is located at the root level (i.e. it is not contained within another folder) then, as with Curt's original script, the folder may be dropped and the script should continue to work as expected.
+The plugin looks for a `Templates` folder to use as a basis for the projects that are created. As with Curt's original script, the folder may be set to 'dropped' and the script should continue to work as expected.
 
 Templates should be included as projects within that folder (but can be inside subfolders).
 
@@ -50,6 +50,14 @@ This action:
 3. Uses the `createFromTemplate` function to create the new project.
 
 It can optionally only be run when no projects or tasks are selected, by adjusting the `Preferences` (see below).
+
+## Go To Templates Folder
+
+This action navigates to the Templates folder and, if it is dropped, makes it active so that any templates contained within it are visible.
+
+## Hide Templates Folder
+
+This action sets the status of the Templates folder to dropped so that it is not visible in most views/perspectives.
 
 ## Preferences
 

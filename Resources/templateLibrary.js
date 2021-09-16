@@ -2,6 +2,8 @@
 (() => {
   const templateLibrary = new PlugIn.Library(new Version('1.0'))
 
+  templateLibrary.getTemplateFolder = () => { return flattenedFolders.find(folder => folder.name === 'Templates') }
+
   templateLibrary.getDestination = async (template) => {
     // find folder from string, if there is a destination
     if (template.note.match(/\$FOLDER=(.*?)$/m) !== null) {
