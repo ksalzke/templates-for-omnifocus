@@ -9,8 +9,10 @@
   })
 
   action.validate = function (selection, sender) {
-    // always show
-    return true
+    // show when Templates folder is visible
+    const templateLibrary = this.templateLibrary
+    const templateFolder = templateLibrary.getTemplateFolder()
+    return templateFolder.active
   }
 
   return action
