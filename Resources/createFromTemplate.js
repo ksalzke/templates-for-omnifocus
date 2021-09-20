@@ -33,6 +33,13 @@
           null
         )
       )
+      templateForm.addField(
+        new Form.Field.Checkbox(
+          'goTo',
+          'Go to project',
+          false
+        )
+      )
       return templateForm
     }
   })
