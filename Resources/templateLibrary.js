@@ -51,8 +51,23 @@
     }
   }
 
+  // returns a set of placeholders from the note of a given task
+  templateLibrary.getPlaceholdersFrom = (task, knownPlaceholders) => {
+    const placeholders = knownPlaceholders
+    const matches = task.note.matchAll(/«([^:»]*):*(.*?)»:*(.*?)$/gm)
+    for (const placeholder of matches) {
+      if (!knownPlaceholders.some(existing => existing.name === placeholder[1])) {
+        placeholders.push({
+          name: placeholder[1],
+          value: (placeholder[3] === '') ? null : placeholder[3]
+        })
+      }
+    }
+    return placeholders
+  }
+
   templateLibrary.createFromTemplate = async (template, destination) => {
-    // create from template
+    // CREATE FROM TEMPLATE
     let created, project
     if (destination instanceof Folder) {
       created = duplicateSections([template], destination)[0]
@@ -68,47 +83,16 @@
 
     // ASK ABOUT OPTIONAL TASKS
     const optTasks = created.flattenedTasks.filter(task => task.note.includes('$OPTIONAL'))
-    askAboutOptionalTasks(optTasks)
+    if (optTasks.length > 0) askAboutOptionalTasks(optTasks)
 
-    // IDENTIFY AND REPLACE TEXT VARIABLES DECLARED IN TEMPLATE TASK NOTE
-
-    /* match and replace placeholders with values specified in specific task's note */
-    function replaceValuesSpecifiedIn (task) {
-      const iterator1 = task.note.matchAll(/«(.*?)»:(.*?)$/gm)
-      if (typeof iterator1[Symbol.iterator] === 'function') {
-        const specifiedPlaceholders = [...iterator1]
-        if (specifiedPlaceholders !== null) {
-          specifiedPlaceholders.forEach((placeholder) => {
-            replace(project, placeholder[1], placeholder[2])
-          })
-        }
-        return specifiedPlaceholders.map(placeholder => placeholder[1])
-      } else return []
+    async function askAboutOptionalTasks (tasks) {
+      const form = new Form()
+      tasks.forEach(task => form.addField(new Form.Field.Checkbox(task.name, task.name, true)))
+      await form.show('Do you want to include the following tasks?', 'Continue')
+      tasks.forEach(task => { if (form.values[task.name] === false) { deleteObject(task) } else task.note = task.note.replace('$OPTIONAL', '') })
     }
 
-    async function replaceValuesNotSpecifiedIn (task, alreadyKnownValues) {
-      const iterator2 = task.note.matchAll(/«(.*?)»$/gm)
-      if (
-        iterator2 !== null &&
-        typeof iterator2[Symbol.iterator] === 'function'
-      ) {
-        let placeholders = [...iterator2]
-        if (placeholders !== null) {
-          const unknownPlaceholders = placeholders.map(placeholder => placeholder[1]).filter(placeholder => !alreadyKnownValues.includes(placeholder))
-          placeholders = unknownPlaceholders.length > 0 ? await askForValues(unknownPlaceholders) : placeholders
-          placeholders.forEach((placeholder) => {
-            replace(project, placeholder[0], placeholder[1])
-          })
-        }
-      }
-    }
-
-    // replace with values from project, then from created group
-    let knownPlaceholders = replaceValuesSpecifiedIn(project.task)
-    knownPlaceholders = knownPlaceholders.concat(replaceValuesSpecifiedIn(created))
-
-    // no value specified
-    replaceValuesNotSpecifiedIn(created, knownPlaceholders)
+    // DEAL WITH PLACEHOLDERS
 
     function replace (project, placeholder, replacement) {
       const regex = new RegExp(`«${placeholder}».*$`, 'gm')
@@ -141,6 +125,19 @@
       })
     }
 
+    // get a set of placeholders from created and project notes
+    const projectPlaceholders = templateLibrary.getPlaceholdersFrom(project, [])
+    const allPlaceholders = templateLibrary.getPlaceholdersFrom(created, projectPlaceholders)
+
+    // relpace placeholders with known value
+    const placeholdersWithValue = allPlaceholders.filter(placeholder => placeholder.value !== null)
+    placeholdersWithValue.forEach(placeholder => replace(project, placeholder.name, placeholder.value))
+
+    // find placeholders with no value, prompt for values, and then replace
+    const placeholdersWithoutValue = allPlaceholders.filter(placeholder => placeholder.value === null)
+    const newPlaceholders = placeholdersWithoutValue.length > 0 ? await askForValues(placeholdersWithoutValue.map(placeholder => placeholder.name)) : []
+    newPlaceholders.forEach(placeholder => replace(project, placeholder.name, placeholder.value))
+
     async function askForValues (placeholders) {
       const form = new Form()
       placeholders.forEach((placeholder) => {
@@ -150,23 +147,19 @@
       })
       try {
         await form.show('Enter value for placeholders:', 'Continue')
-        const valuesList = []
+        const result = []
         placeholders.forEach((placeholder) => {
-          valuesList.push([placeholder, form.values[placeholder]])
+          result.push({
+            name: placeholder,
+            value: form.values[placeholder]
+          })
         })
-        return valuesList
+        return result
       } catch (error) {
         // if placeholder form cancelled, remove the item that was just created
         deleteObject(created)
         console.log(`Form cancelled: ${error}`)
       }
-    }
-
-    async function askAboutOptionalTasks (tasks) {
-      const form = new Form()
-      tasks.forEach(task => form.addField(new Form.Field.Checkbox(task.name, task.name, true)))
-      await form.show('Do you want to include the following tasks?', 'Continue')
-      tasks.forEach(task => { if (form.values[task.name] === false) { deleteObject(task) } else task.note = task.note.replace('$OPTIONAL', '') })
     }
 
     // ADJUST DATES
@@ -219,7 +212,6 @@
     const tasksWithDueDates = created.flattenedTasks.filter(task => task.note.includes('$DUE=')).concat(created)
     tasksWithDueDates.forEach(task => {
       const dueString = template.note.match(/\$DUE=(.*?)$/m)[1]
-      console.log(dueString)
       task.dueDate = Formatter.Date.withStyle(Formatter.Date.Style.Full).dateFromString(dueString)
     })
   }
