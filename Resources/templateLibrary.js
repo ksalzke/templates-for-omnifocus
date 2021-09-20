@@ -59,6 +59,7 @@
       if (!knownPlaceholders.some(existing => existing.name === placeholder[1])) {
         placeholders.push({
           name: placeholder[1],
+          default: placeholder[2],
           value: (placeholder[3] === '') ? null : placeholder[3]
         })
       }
@@ -135,16 +136,16 @@
 
     // find placeholders with no value, prompt for values, and then replace
     const placeholdersWithoutValue = allPlaceholders.filter(placeholder => placeholder.value === null)
-    const newPlaceholders = placeholdersWithoutValue.length > 0 ? await askForValues(placeholdersWithoutValue.map(placeholder => placeholder.name)) : []
-    newPlaceholders.forEach(placeholder => replace(project, placeholder.name, placeholder.value))
+    const newPlaceholders = placeholdersWithoutValue.length > 0 ? await askForValues(placeholdersWithoutValue) : []
+    newPlaceholders.forEach(placeholder => {
+      replace(project, placeholder.name, placeholder.value)
+    })
 
     async function askForValues (placeholders) {
       const form = new Form()
       placeholders.forEach((placeholder) => {
-        const defaultValue = placeholder.includes('::') ? placeholder.split('::')[1] : null
-        placeholder = placeholder.includes('::') ? placeholder.split('::')[0] : placeholder
         form.addField(
-          new Form.Field.String(placeholder, placeholder, defaultValue)
+          new Form.Field.String(placeholder.name, placeholder.name, placeholder.default)
         )
       })
       try {
@@ -152,8 +153,8 @@
         const result = []
         placeholders.forEach((placeholder) => {
           result.push({
-            name: placeholder,
-            value: form.values[placeholder]
+            name: placeholder.name,
+            value: form.values[placeholder.name]
           })
         })
         return result
