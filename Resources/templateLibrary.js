@@ -1,4 +1,4 @@
-/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections Tag Calendar deleteObject library flattenedFolders flattenedTags Formatter */
+/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections Task Tag Calendar deleteObject library flattenedFolders flattenedTags Formatter */
 (() => {
   const templateLibrary = new PlugIn.Library(new Version('1.0'))
 
@@ -77,8 +77,11 @@
     } else if (destination instanceof Project) {
       created = duplicateTasks([template.task], destination)[0]
       project = destination
-    } else {
+    } else if (destination instanceof Task) {
       created = duplicateTasks([template.task], destination)[0]
+      project = created.containingProject
+    } else {
+      created = duplicateSections([template], destination)[0]
       project = created.containingProject
     }
 
