@@ -64,13 +64,13 @@ This action sets the status of the Templates folder to dropped so that it is not
 
 ## Preferences
 
-This action allows the user to set the preferences for the plug-in. Currently, the only available preference is:
-
-_Please note that these settings are device-specific and do not sync between devices._
+This action allows the user to set the preferences for the plug-in. Currently, the available preferences are:
 
 * **Always enable action in menu:** If selected, the 'Create From Template' action is always available. Otherwise, it is only available when nothing is selected. 
 
 * **'Auto-select 'Go to created project' when creating from template**
+
+_Please note that these settings are device-specific and do not sync between devices._
 
 # Functions
 
