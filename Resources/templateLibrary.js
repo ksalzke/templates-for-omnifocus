@@ -99,7 +99,7 @@
     // DEAL WITH PLACEHOLDERS
 
     function replace (project, placeholder, replacement) {
-      const regex = new RegExp(`«${placeholder}».*$`, 'gm')
+      const regex = new RegExp(`«${placeholder}:*.*».*$`, 'gm')
       // if replacement isn't defined, use empty string
       replacement = replacement === undefined ? '' : replacement
 
