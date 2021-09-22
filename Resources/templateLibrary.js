@@ -212,7 +212,7 @@
     }
 
     // new method - using date variables
-    const tasksWithDueDates = created.flattenedTasks.filter(task => task.note.includes('$DUE=')).concat(created)
+    const tasksWithDueDates = [created, ...created.flattenedTasks].filter(task => task.note.includes('$DUE='))
     tasksWithDueDates.forEach(task => {
       const dueString = template.note.match(/\$DUE=(.*?)$/m)[1]
       task.dueDate = Formatter.Date.withStyle(Formatter.Date.Style.Full).dateFromString(dueString)
