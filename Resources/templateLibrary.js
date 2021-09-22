@@ -217,6 +217,8 @@
       const dueString = template.note.match(/\$DUE=(.*?)$/m)[1]
       task.dueDate = Formatter.Date.withStyle(Formatter.Date.Style.Full).dateFromString(dueString)
     })
+
+    return created
   }
 
   return templateLibrary

@@ -15,7 +15,8 @@
       const destination = await templateLibrary.getDestination(
         form.values.template
       )
-      templateLibrary.createFromTemplate(form.values.template, destination)
+      const created = await templateLibrary.createFromTemplate(form.values.template, destination)
+      if (form.values.goTo) URL.fromString('omnifocus:///task/' + created.id.primaryKey).call(() => {})
     })
 
     function generateTemplateForm () {
