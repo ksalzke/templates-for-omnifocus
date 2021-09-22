@@ -5,6 +5,8 @@
     // selection options: tasks, projects, folders, tags
 
     const templateLibrary = this.templateLibrary
+    // load preferences
+    const preferences = new Preferences('com.KaitlinSalzke.Templates')
 
     const templateFormPromise = generateTemplateForm().show(
       'Choose Template',
@@ -37,8 +39,8 @@
       templateForm.addField(
         new Form.Field.Checkbox(
           'goTo',
-          'Go to project',
-          false
+          'Go to created project',
+          preferences.readBoolean('alwaysGoTo')
         )
       )
       return templateForm

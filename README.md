@@ -27,12 +27,13 @@ Templates should be included as projects within that folder (but can be inside s
 
 As with Curt's original script:
 
-- Placeholders should be written inside double-angle quotation marks (« and », typed using `Option(⌥)` + `\` and `Option (⌥)` + `Shift` + `\` respectively). They should also be included in the project's notes. **Unlike Curt's script, these should be specified a separate line for each variable.**
+- Placeholders should be written inside double-angle quotation marks (« and », typed using `Option(⌥)` + `\` and `Option (⌥)` + `Shift` + `\` respectively). They should also be included in the project's notes. **Unlike Curt's script, these should be specified on a separate line for each variable.**
 - Defer and due dates can be set for the project; if the project itself has either of these, then you will be prompted for a new date when the script is run, and all dates will be adjusted in line with this.
 
 In addition:
 
 - The folder for the project to be created in can be specified by including the following as its own line within the project note, where 'Folder' is the name of the folder: `$FOLDER=Folder`.
+- A due date for a task can be specified using the format `$DUE=Some Date`. The OmniFocus date parser is used so these can be entered in any form supported by OmniFocus.
 - Placeholders can also be used within tags. (New tags will be created as needed at the root level.)
 - You can specify a value to be used for a placeholder by using the format `«Placeholder»:Value`. The user will not be prompted to fill in these fields.
 - Alternatively, you can specify a default value for a placeholder by using the format `«Placeholder:Default»`. The user will be prompted for a value for these fields, but the default value will be autofilled in the form.
@@ -49,6 +50,7 @@ This action:
 1. Prompts the user to select a template (from the projects included in the `Templates` folder).
 2. Uses the `getDestination` function to determine where the new project should be created.
 3. Uses the `createFromTemplate` function to create the new project.
+4. If the `Go to created project` checkbox is selected, takes the user to the created project.
 
 It can optionally only be run when no projects or tasks are selected, by adjusting the `Preferences` (see below).
 
@@ -64,7 +66,11 @@ This action sets the status of the Templates folder to dropped so that it is not
 
 This action allows the user to set the preferences for the plug-in. Currently, the only available preference is:
 
-* **Always enable action in menu:** If selected, the 'Create From Template' action is always available. Otherwise, it is only available when nothing is selected. _Please note that this setting is device-specific and does not sync between devices._
+_Please note that these settings are device-specific and do not sync between devices._
+
+* **Always enable action in menu:** If selected, the 'Create From Template' action is always available. Otherwise, it is only available when nothing is selected. 
+
+* **'Auto-select 'Go to created project' when creating from template**
 
 # Functions
 
@@ -91,4 +97,4 @@ This function takes a template and a destination (a folder or project) as input.
       - If there are any tags that include a placeholder in their name, replaces the tag with a matching tag. (If there is no matching tag found, a new tag will be created at the top level.)
       - Includes the replacement value in the note of the created project (in the form `«Placeholder»:Value`)
       - _Note:_ If a template is copied to an existing project, any placeholders in the project's note will be used first before prompting for further information.
-3. If the template project has a due date, prompts the user for a new due date and adjusts the dates of all tasks within the created project/action group accordingly. If there is no due date but there is a defer date, this is used instead.
+3. If the template project has a due date, prompts the user for a new due date and adjusts the dates of all tasks within the created project/action group accordingly. If there is no due date but there is a defer date, this is used instead. If any actions have `$DUE` 
