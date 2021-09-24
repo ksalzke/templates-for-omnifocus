@@ -82,7 +82,7 @@
       project = created.containingProject
     } else {
       created = duplicateSections([template], destination)[0]
-      project = created.containingProject
+      project = created
     }
 
     // ASK ABOUT OPTIONAL TASKS
