@@ -71,6 +71,8 @@ This action allows the user to set the preferences for the plug-in. Currently, t
 
 * **'Auto-select 'Go to created project' when creating from template**
 
+* **Sort folder/project list alphabetically (instead of in OmniFocus order)**
+
 _Please note that these settings are device-specific and do not sync between devices._
 
 # Functions

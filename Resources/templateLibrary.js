@@ -1,10 +1,12 @@
-/* global PlugIn Version foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections Task Tag Calendar deleteObject library flattenedFolders flattenedTags Formatter */
+/* global PlugIn Version Preferences foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections Task Tag Calendar deleteObject library flattenedFolders flattenedTags Formatter */
 (() => {
   const templateLibrary = new PlugIn.Library(new Version('1.0'))
 
   templateLibrary.getTemplateFolder = () => { return flattenedFolders.find(folder => folder.name === 'Templates') }
 
   templateLibrary.getDestination = async (template) => {
+    const preferences = new Preferences('com.KaitlinSalzke.Templates')
+
     // find folder from string, if there is a destination
     if (template.note.match(/\$FOLDER=(.*?)$/m) !== null) {
       return foldersMatching(template.note.match(/\$FOLDER=(.*?)$/m)[1])[0]
@@ -23,11 +25,13 @@
       const activeFolders = flattenedFolders.filter(folder => folder.status === Folder.Status.Active)
 
       function updateDestinationDropdown (sections) {
+        const sortedSections = preferences.readBoolean('sortLocationsAlphabetically') ? sections.sort((a, b) => a.name > b.name) : sections
+        const sectionNames = preferences.readBoolean('sortLocationsAlphabetically') ? sortedSections.map(section => section.name) : sortedSections.map((section) => section instanceof Folder ? `📁 ${section.name}` : `—${section.name}`)
         destinationOptions = new Form.Field.Option(
           'destination',
           'Destination',
-          [library.ending, ...sections],
-          ['Top Level', ...sections.map((section) => section instanceof Folder ? `📁 ${section.name}` : `—${section.name}`)],
+          [library.ending, ...sortedSections],
+          ['Top Level', ...sectionNames],
           null
         )
         destinationOptions.allowsNull = true
