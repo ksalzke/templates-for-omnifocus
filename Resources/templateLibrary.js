@@ -98,7 +98,7 @@
 
     // DEAL WITH PLACEHOLDERS
 
-    function replace (project, placeholder, replacement) {
+    async function replace (project, placeholder, replacement) {
       const regex = new RegExp(`«${placeholder}:*.*».*$`, 'gm')
       // if replacement isn't defined, use empty string
       replacement = replacement === undefined ? '' : replacement
@@ -112,6 +112,8 @@
       project.task.apply((tsk) => {
         // replace in task names
         tsk.name = tsk.name.replaceAll(`«${placeholder}»`, replacement)
+        // replace in task notes
+        tsk.note = tsk.note.replaceAll(`{{${placeholder}}}`, replacement)
         // replace tags
         tsk.tags.forEach(tag => {
           if (tag.name.includes(`«${placeholder}»`)) {
@@ -140,7 +142,7 @@
     // find placeholders with no value, prompt for values, and then replace
     const placeholdersWithoutValue = allPlaceholders.filter(placeholder => placeholder.value === null)
     const newPlaceholders = placeholdersWithoutValue.length > 0 ? await askForValues(placeholdersWithoutValue) : []
-    newPlaceholders.forEach(placeholder => {
+    await newPlaceholders.forEach(placeholder => {
       replace(project, placeholder.name, placeholder.value)
     })
 
@@ -217,7 +219,7 @@
     // new method - using date variables
     const tasksWithDueDates = [created, ...created.flattenedTasks].filter(task => task.note.includes('$DUE='))
     tasksWithDueDates.forEach(task => {
-      const dueString = template.note.match(/\$DUE=(.*?)$/m)[1]
+      const dueString = created.note.match(/\$DUE=(.*?)$/m)[1]
       task.dueDate = Formatter.Date.withStyle(Formatter.Date.Style.Full).dateFromString(dueString)
     })
 
