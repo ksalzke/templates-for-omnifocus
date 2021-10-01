@@ -34,7 +34,8 @@ In addition:
 
 - The folder for the project to be created in can be specified by including the following as its own line within the project note, where 'Folder' is the name of the folder: `$FOLDER=Folder`.
 - A due date for a task can be specified using the format `$DUE=Some Date`. The OmniFocus date parser is used so these can be entered in any form supported by OmniFocus. In addition, placeholders already identified using the placeholder format can be used inside this date e.g. if `«Due Date»` is specified as a placeholder then `$DUE={{Due Date}}` can be used.
-- Placeholders can also be used within tags. (New tags will be created as needed at the root level.)
+- A defer date for a task can be specified using the format `$DEFER=Some Date`. The OmniFocus date parser is used so these can be entered in any form supported by OmniFocus. In addition, placeholders already identified using the placeholder format can be used inside this date e.g. if `«Due Date»` is specified as a placeholder then `$DEFER={{Due Date}} - 3d` can be used.
+- Placeholders can also be used within tags. (New tags will be created as needed at the root level if the tag does not exist.)
 - You can specify a value to be used for a placeholder by using the format `«Placeholder»:Value`. The user will not be prompted to fill in these fields.
 - Alternatively, you can specify a default value for a placeholder by using the format `«Placeholder:Default»`. The user will be prompted for a value for these fields, but the default value will be autofilled in the form.
 - If the destination is a project, placeholders in the pre-existing project's note will be used. As these are updated when the original project is created (assuming it is created from a template) this allows for the same values to be re-used without having to be entered a second time.
