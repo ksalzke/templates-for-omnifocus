@@ -3,12 +3,20 @@
   "identifier": "com.KaitlinSalzke.Templates",
   "author": "Kaitlin Salzke",
   "description": "An OmniFocus plugin that enables projects to be created from templates",
-  "version": "1.9",
+  "version": "1.10.0",
   "actions": [
-    {"identifier": "createFromTemplate"},
-    { "identifier": "goToTemplatesFolder"},
-    { "identifier": "hideTemplatesFolder"},
-    { "identifier": "preferences"}
+    {
+      "identifier": "createFromTemplate"
+    },
+    {
+      "identifier": "goToTemplatesFolder"
+    },
+    {
+      "identifier": "hideTemplatesFolder"
+    },
+    {
+      "identifier": "preferences"
+    }
   ],
   "libraries": [
     {
