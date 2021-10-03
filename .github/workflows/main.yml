@@ -30,4 +30,5 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v3
         with:
           version-file: manifest.json
+          release-count: 0
           
