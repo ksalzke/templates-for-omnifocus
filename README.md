@@ -48,7 +48,7 @@ This plug-in contains the following actions:
 
 This action:
 
-1. Prompts the user to select a template (from the projects included in the `Templates` folder).
+1. Prompts the user to select a template (from the projects included in the `Templates` folder). If a template project is already selected, the prompt is not shown and the selected template is used.
 2. Uses the `getDestination` function to determine where the new project should be created.
 3. Uses the `createFromTemplate` function to create the new project.
 4. If the `Go to created project` checkbox is selected, takes the user to the created project.
