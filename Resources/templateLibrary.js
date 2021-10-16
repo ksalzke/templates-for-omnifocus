@@ -1,8 +1,39 @@
-/* global PlugIn Version Preferences foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections Task Tag Calendar deleteObject library flattenedFolders flattenedTags Formatter */
+/* global Alert PlugIn Version Preferences foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections Task Tag Calendar deleteObject library flattenedFolders flattenedTags Formatter */
 (() => {
   const templateLibrary = new PlugIn.Library(new Version('1.0'))
 
-  templateLibrary.getTemplateFolder = () => { return flattenedFolders.find(folder => folder.name === 'Templates') }
+  templateLibrary.loadSyncedPrefs = () => {
+    const syncedPrefsPlugin = PlugIn.find('com.KaitlinSalzke.SyncedPrefLibrary')
+
+    if (syncedPrefsPlugin !== null) {
+      const SyncedPref = syncedPrefsPlugin.library('syncedPrefLibrary').SyncedPref
+      return new SyncedPref('com.KaitlinSalzke.Templates')
+    } else {
+      const alert = new Alert(
+        'Synced Preferences Library Required',
+        'For the Templates plug-in to work correctly, the \'Synced Preferences for OmniFocus\' plugin (https://github.com/ksalzke/synced-preferences-for-omnifocus) is also required and needs to be added to the plug-in folder separately. Either you do not currently have this plugin installed, or it is not installed correctly.'
+      )
+      alert.show()
+    }
+  }
+
+  templateLibrary.getTemplateFolder = async () => {
+    // get ID from preferences
+    const syncedPrefs = templateLibrary.loadSyncedPrefs()
+    const templateFolderID = syncedPrefs.read('templateFolderID')
+
+    // if ID has been set
+    if (templateFolderID) return Folder.byIdentifier(templateFolderID)
+
+    // if not, prompt
+    const folderForm = new Form()
+    folderForm.addField(new Form.Field.Option('templateFolder', 'Template Folder', flattenedFolders, flattenedFolders.map(folder => folder.name), null, 'Please select'))
+    await folderForm.show('Please select the folder where templates are stored.', 'OK')
+
+    // save preference and return folder
+    syncedPrefs.write('templateFolderID', folderForm.values.templateFolder.id.primaryKey)
+    return folderForm.values.templateFolder
+  }
 
   templateLibrary.getDestination = async (template) => {
     const preferences = new Preferences('com.KaitlinSalzke.Templates')

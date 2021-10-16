@@ -19,9 +19,11 @@ Refer to the 'issues' in this repo for known issues and planned changes/enhancem
 4. Move the resulting file to your OmniFocus plug-in library folder.
 5. Configure your preferences using the `Preferences` action. (Note that to run this action, no tasks can be selected.)
 
+**Important note: for this plug-in bundle to work correctly, my [Synced Prefernecs for OmniFocus plugin](https://github.com/ksalzke/synced-preferences-for-omnifocus) is also required and needs to be added to the plug-in folder separately.**
+
 ## Template Folder
 
-The plugin looks for a `Templates` folder to use as a basis for the projects that are created. As with Curt's original script, the folder may be set to 'dropped' and the script should continue to work as expected.
+The plugin prompts the user to select an existing folder that contains (or will contain) the projects to use as a basis for the projects that are created. As with Curt's original script, the folder may be set to 'dropped' and the plugin should continue to work as expected.
 
 Templates should be included as projects within that folder (but can be inside subfolders).
 
@@ -48,7 +50,7 @@ This plug-in contains the following actions:
 
 This action:
 
-1. Prompts the user to select a template (from the projects included in the `Templates` folder). If a template project is already selected, the prompt is not shown and the selected template is used.
+1. Prompts the user to select a template (from the projects included in the templates folder). If a template project is already selected, the prompt is not shown and the selected template is used.
 2. Uses the `getDestination` function to determine where the new project should be created.
 3. Uses the `createFromTemplate` function to create the new project.
 4. If the `Go to created project` checkbox is selected, takes the user to the created project.
@@ -57,7 +59,7 @@ It can optionally only be run when no projects or tasks are selected, by adjusti
 
 ## Go To Templates Folder
 
-This action navigates to the Templates folder and, if it is dropped, makes it active so that any templates contained within it are visible.
+This action navigates to the Templates folder and, if it is dropped, makes it active so that any templates contained within it are visible. (Note that if a focus is set that renders the templates folder hidden, it will not be unhidden unless you first leave the focused mode.)
 
 ## Hide Templates Folder
 
@@ -67,17 +69,25 @@ This action sets the status of the Templates folder to dropped so that it is not
 
 This action allows the user to set the preferences for the plug-in. Currently, the available preferences are:
 
-* **Always enable action in menu:** If selected, the 'Create From Template' action is always available. Otherwise, it is only available when nothing is selected. 
+* **Template Folder** This is the folder where template projects are saved.
 
-* **'Auto-select 'Go to created project' when creating from template**
+* **Always enable action in menu:** If selected, the 'Create From Template' action is always available. Otherwise, it is only available when nothing is selected. _Please note that this setting is device-specific and does not sync between devices._
 
-* **Sort folder/project list alphabetically (instead of in OmniFocus order)**
+* **'Auto-select 'Go to created project' when creating from template** _Please note that this setting is device-specific and does not sync between devices._
 
-_Please note that these settings are device-specific and do not sync between devices._
+* **Sort folder/project list alphabetically (instead of in OmniFocus order)** _Please note that this setting is device-specific and does not sync between devices._
 
 # Functions
 
 This plugin contains the following functions within the `templateLibrary` library:
+
+## `loadSyncedPrefs ()`
+
+This function returns the synced preferences instance for the plugin.
+
+## `getTemplateFolder ()`
+
+This function returns the folder that is currently set as the folder where templates are stored. If no preference has been set, the user is prompted to select a folder.
 
 ## getDestination
 
