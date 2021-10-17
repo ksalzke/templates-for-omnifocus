@@ -1,3 +1,12 @@
+# [1.12.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.11.0...v1.12.0) (2021-10-17)
+
+
+### Features
+
+* add SF symbols for actions ([260c945](https://github.com/ksalzke/templates-for-omnifocus/commit/260c9459166082b90ceb4e02226a30c51c64a115))
+
+
+
 # [1.11.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.10.0...v1.11.0) (2021-10-16)
 
 
