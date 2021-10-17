@@ -1,4 +1,4 @@
-/* global Alert PlugIn Version Preferences foldersMatching Form flattenedSections Folder Project duplicateTasks duplicateSections Task Tag Calendar deleteObject library flattenedFolders flattenedTags Formatter */
+/* global Alert PlugIn Version Preferences Form flattenedSections Folder Project duplicateTasks duplicateSections Task Tag Calendar deleteObject library flattenedFolders flattenedTags Formatter */
 (() => {
   const templateLibrary = new PlugIn.Library(new Version('1.0'))
 
@@ -39,8 +39,10 @@
     const preferences = new Preferences('com.KaitlinSalzke.Templates')
 
     // find folder from string, if there is a destination
-    if (template.note.match(/\$FOLDER=(.*?)$/m) !== null) {
-      return foldersMatching(template.note.match(/\$FOLDER=(.*?)$/m)[1])[0]
+    const match = template.note.match(/\$FOLDER=(.*?)$/m)
+    const destFolder = (match === null) ? undefined : flattenedFolders.find(folder => folder.name === match[1])
+    if (destFolder !== undefined) {
+      return destFolder
     } else {
       // otherwise, show form to user to select
       const destinationForm = new Form()
