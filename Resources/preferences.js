@@ -7,9 +7,9 @@
     const syncedPrefs = this.templateLibrary.loadSyncedPrefs()
 
     // get current preferences or set defaults if they don't yet exist
-    const alwaysEnable = preferences.readBoolean('alwaysEnable') ? preferences.readBoolean('alwaysEnable') : true
-    const alwaysGoTo = preferences.readBoolean('alwaysGoTo') ? preferences.readBoolean('alwaysGoTo') : false
-    const sortLocationsAlphabetically = preferences.readBoolean('sortLocationsAlphabetically') ? preferences.readBoolean('sortLocationsAlphabetically') : false
+    const alwaysEnable = (preferences.read('alwaysEnable') !== null) ? preferences.readBoolean('alwaysEnable') : true
+    const alwaysGoTo = (preferences.read('alwaysGoTo') !== null) ? preferences.readBoolean('alwaysGoTo') : false
+    const sortLocationsAlphabetically = (preferences.read('sortLocationsAlphabetically') !== null) ? preferences.readBoolean('sortLocationsAlphabetically') : false
     const templateFolderID = syncedPrefs.read('templateFolderID')
     const templateFolder = templateFolderID ? Folder.byIdentifier(templateFolderID) : null
 
