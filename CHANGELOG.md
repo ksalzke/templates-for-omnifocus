@@ -1,3 +1,12 @@
+## [1.12.2](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.12.1...v1.12.2) (2021-10-17)
+
+
+### Bug Fixes
+
+* fix logic re whether prefs are set ([a92571b](https://github.com/ksalzke/templates-for-omnifocus/commit/a92571b2d9b1e3138adb2dd96d09bdf70aeba161))
+
+
+
 ## [1.12.1](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.12.0...v1.12.1) (2021-10-17)
 
 
