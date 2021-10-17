@@ -6,16 +6,20 @@
   "version": "1.11.0",
   "actions": [
     {
-      "identifier": "createFromTemplate"
+      "identifier": "createFromTemplate",
+      "image": "doc.badge.plus"
     },
     {
-      "identifier": "goToTemplatesFolder"
+      "identifier": "goToTemplatesFolder",
+      "image": "folder.fill"
     },
     {
-      "identifier": "hideTemplatesFolder"
+      "identifier": "hideTemplatesFolder",
+      "image": "folder"
     },
     {
-      "identifier": "preferences"
+      "identifier": "preferences",
+      "image": "doc.badge.gearshape"
     }
   ],
   "libraries": [
