@@ -1,3 +1,12 @@
+## [1.12.1](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.12.0...v1.12.1) (2021-10-17)
+
+
+### Bug Fixes
+
+* use find instead of foldersMatching ([64c0461](https://github.com/ksalzke/templates-for-omnifocus/commit/64c04615c9832d53650904de32b4c576710cb85d))
+
+
+
 # [1.12.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.11.0...v1.12.0) (2021-10-17)
 
 
