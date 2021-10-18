@@ -1,3 +1,12 @@
+## [1.12.3](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.12.2...v1.12.3) (2021-10-18)
+
+
+### Bug Fixes
+
+* add await to go to/hide actions to fix bug where promise was returned ([6765d9e](https://github.com/ksalzke/templates-for-omnifocus/commit/6765d9e6965ed54cb16344dc01fa3e8607dd6e0a))
+
+
+
 ## [1.12.2](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.12.1...v1.12.2) (2021-10-17)
 
 
