@@ -3,7 +3,7 @@
   const action = new PlugIn.Action(async function (selection, sender) {
     const templateLibrary = this.templateLibrary
 
-    const templateFolder = templateLibrary.getTemplateFolder()
+    const templateFolder = await templateLibrary.getTemplateFolder()
 
     templateFolder.active = true
     const urlStr = 'omnifocus:///folder/' + templateFolder.id.primaryKey

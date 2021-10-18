@@ -3,7 +3,9 @@
   const action = new PlugIn.Action(async function (selection, sender) {
     const templateLibrary = this.templateLibrary
 
-    const templateFolder = templateLibrary.getTemplateFolder()
+    const templateFolder = await templateLibrary.getTemplateFolder()
+
+    console.log(templateFolder)
 
     templateFolder.active = false
   })
