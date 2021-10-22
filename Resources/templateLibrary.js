@@ -258,12 +258,14 @@
     tasksWithDueDates.forEach(task => {
       const dueString = task.note.match(/\$DUE=(.*?)$/m)[1]
       task.dueDate = Formatter.Date.withStyle(Formatter.Date.Style.Full).dateFromString(dueString)
+      task.note = task.note.replace(task.note.match(/\$DUE=(.*?)$/m)[0], '')
     })
 
     const tasksWithDeferDates = [created, ...created.flattenedTasks].filter(task => task.note.includes('$DEFER='))
     tasksWithDeferDates.forEach(task => {
       const deferString = task.note.match(/\$DEFER=(.*?)$/m)[1]
       task.deferDate = Formatter.Date.withStyle(Formatter.Date.Style.Full).dateFromString(deferString)
+      task.note = task.note.replace(task.note.match(/\$DEFER=(.*?)$/m)[0], '')
     })
 
     return created
