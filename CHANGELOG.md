@@ -1,3 +1,12 @@
+# [1.13.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.12.3...v1.13.0) (2021-10-22)
+
+
+### Features
+
+* remove due/defer date from note once used ([4c0a254](https://github.com/ksalzke/templates-for-omnifocus/commit/4c0a2546e4f16969873f394cc7e578c09e88eee0))
+
+
+
 ## [1.12.3](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.12.2...v1.12.3) (2021-10-18)
 
 
