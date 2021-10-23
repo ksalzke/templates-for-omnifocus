@@ -19,7 +19,7 @@ Refer to the 'issues' in this repo for known issues and planned changes/enhancem
 4. Move the resulting file to your OmniFocus plug-in library folder.
 5. Configure your preferences using the `Preferences` action. (Note that to run this action, no tasks can be selected.)
 
-**Important note: for this plug-in bundle to work correctly, my [Synced Prefernecs for OmniFocus plugin](https://github.com/ksalzke/synced-preferences-for-omnifocus) is also required and needs to be added to the plug-in folder separately.**
+**Important note: for this plug-in bundle to work correctly, my [Synced Preferences for OmniFocus plugin](https://github.com/ksalzke/synced-preferences-for-omnifocus) is also required and needs to be added to the plug-in folder separately.**
 
 ## Template Folder
 
