@@ -15,7 +15,7 @@
 
     // create and show form
     const prefForm = new Form()
-    prefForm.addField(new Form.Field.Checkbox('alwaysEnable', 'Always enable action in menu', alwaysEnable))
+    if (!Device.current.mac) prefForm.addField(new Form.Field.Checkbox('alwaysEnable', 'Always enable action in menu (for iOS)', alwaysEnable))
     prefForm.addField(new Form.Field.Checkbox('alwaysGoTo', 'Auto-select \'Go to created project\' when creating from template', alwaysGoTo))
     prefForm.addField(new Form.Field.Checkbox('sortLocationsAlphabetically', 'Sort folder/project list alphabetically (instead of in OmniFocus order)', sortLocationsAlphabetically))
     prefForm.addField(new Form.Field.Option('templateFolder', 'Template Folder', flattenedFolders, flattenedFolders.map(folder => folder.name), templateFolder, 'Please select'))
