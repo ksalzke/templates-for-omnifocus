@@ -1,3 +1,17 @@
+# [1.14.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.13.0...v1.14.0) (2021-11-14)
+
+
+### Features
+
+* 'always enable' preference no longer shown on Mac ([686f55b](https://github.com/ksalzke/templates-for-omnifocus/commit/686f55bd14dd8adc57ee2e856aa04a3a6407b2b8))
+* 'always enable' preference no longer shown on Mac ([5be58cc](https://github.com/ksalzke/templates-for-omnifocus/commit/5be58cc7d1f2a979b49051e528c31e91d3dff6e9))
+* make 'create from template' action always available on macOS ([7142ae8](https://github.com/ksalzke/templates-for-omnifocus/commit/7142ae8e1f1d615549e276195255566b2710f7f3))
+* make 'preferences' action always available on macOS ([66ffea9](https://github.com/ksalzke/templates-for-omnifocus/commit/66ffea9e6206a7b6ca6ca4178dc562d4941ae7c3))
+* restructure repo to improve ease of installation ([b417f97](https://github.com/ksalzke/templates-for-omnifocus/commit/b417f971b553d09d99cdb430d96541f2ea2b5ff6))
+* use new tab and focus on Mac ([e875f77](https://github.com/ksalzke/templates-for-omnifocus/commit/e875f77e128d5dfa1a25ea5dc34be82da4d96719))
+
+
+
 # [1.13.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.12.3...v1.13.0) (2021-10-22)
 
 
