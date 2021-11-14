@@ -58,7 +58,9 @@ It can optionally only be run when no projects or tasks are selected, by adjusti
 
 ## Go To Templates Folder
 
-This action navigates to the Templates folder and, if it is dropped, makes it active so that any templates contained within it are visible. (Note that if a focus is set that renders the templates folder hidden, it will not be unhidden unless you first leave the focused mode.)
+This action navigates to the Templates folder and, if it is dropped, makes it active so that any templates contained within it are visible. (Note that, on iOS, if a focus is set that renders the templates folder hidden, it will not be unhidden unless you first leave the focused mode.)
+
+On Mac, a new tab is opened and the focus for that tab is set to only the templates folder.
 
 ## Hide Templates Folder
 
