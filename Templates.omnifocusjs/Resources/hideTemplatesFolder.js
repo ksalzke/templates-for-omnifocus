@@ -5,8 +5,6 @@
 
     const templateFolder = await templateLibrary.getTemplateFolder()
 
-    console.log(templateFolder)
-
     templateFolder.active = false
   })
 
