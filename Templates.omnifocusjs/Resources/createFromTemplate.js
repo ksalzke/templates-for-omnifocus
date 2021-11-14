@@ -44,6 +44,9 @@
   })
 
   action.validate = function (selection, sender) {
+    // always available on Mac
+    if (Device.current.mac) return true
+
     // load library
     const lib = this.templateLibrary
 
