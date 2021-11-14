@@ -13,11 +13,10 @@ Refer to the 'issues' in this repo for known issues and planned changes/enhancem
 
 # Installation & Set-Up
 
-1. Click on the green `Clone or download` button above to download a `.zip` file of all the files in this GitHub repository.
+1. Download the [latest release](https://github.com/ksalzke/templates-for-omnifocus/releases/latest).
 2. Unzip the downloaded file.
-3. Rename the entire folder to anything you like, with the extension `.omnifocusjs`
-4. Move the resulting file to your OmniFocus plug-in library folder.
-5. Configure your preferences using the `Preferences` action. (Note that to run this action, no tasks can be selected.)
+3. Open the .omnifocusjs file and follow the prompts to install it in OmniFocus.
+4. Configure your preferences using the `Preferences` action. (Note that to run this action, no tasks can be selected.)
 
 **Important note: for this plug-in bundle to work correctly, my [Synced Preferences for OmniFocus plugin](https://github.com/ksalzke/synced-preferences-for-omnifocus) is also required and needs to be added to the plug-in folder separately.**
 
