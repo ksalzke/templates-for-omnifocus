@@ -72,7 +72,7 @@ This action allows the user to set the preferences for the plug-in. Currently, t
 
 * **Template Folder** This is the folder where template projects are saved.
 
-* **Always enable action in menu:** If selected, the 'Create From Template' action is always available. Otherwise, it is only available when nothing is selected. _Please note that this setting is device-specific and does not sync between devices._
+* **Always enable action in menu (iOS only):** If selected, the 'Create From Template' action is always available. Otherwise, it is only available when nothing is selected. _Please note that this setting is device-specific and does not sync between devices._
 
 * **'Auto-select 'Go to created project' when creating from template** _Please note that this setting is device-specific and does not sync between devices._
 
