@@ -44,20 +44,7 @@
   })
 
   action.validate = function (selection, sender) {
-    // always available on Mac
-    if (Device.current.mac) return true
-
-    // load library
-    const lib = this.templateLibrary
-
-    // load preferences
-    const preferences = new Preferences('com.KaitlinSalzke.Templates')
-    const syncedPrefs = lib.loadSyncedPrefs()
-    const templateFolderID = syncedPrefs.read('templateFolderID')
-
-    return preferences.readBoolean('alwaysEnable') || // show if always enabled preference is set
-      (selection.tasks.length === 0 && selection.projects.length === 0) || // show if nothing selected
-      (templateFolderID && selection.projects.length === 1 && lib.getTemplateFolder().flattenedProjects.includes(selection.projects[0])) // show if a template project is selected
+    return true
   }
 
   return action
