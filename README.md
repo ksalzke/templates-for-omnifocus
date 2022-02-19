@@ -18,11 +18,11 @@ Refer to ['issues'](https://github.com/ksalzke/templates-for-omnifocus/issues) f
 3. Move the `.omnifocusjs` file to your OmniFocus plug-in library folder (or open it to install).
 4. Configure your preferences using the `Preferences` action. (Note that to run this action, no tasks can be selected.)
 
-**Important note: for this plug-in bundle to work correctly, my [Synced Preferences for OmniFocus plugin](https://github.com/ksalzke/synced-preferences-for-omnifocus) is also required and needs to be added to the plug-in folder separately.**
+**Important note: for this plug-in bundle to work correctly, my [Synced Preferences for OmniFocus plug-in](https://github.com/ksalzke/synced-preferences-for-omnifocus) is also required and needs to be added to the plug-in folder separately.**
 
 ## Template Folder
 
-The plugin prompts the user to select an existing folder that contains (or will contain) the projects to use as a basis for the projects that are created. As with Curt's original script, the folder may be set to 'dropped' and the plugin should continue to work as expected. A 'Hide Templates Folder' action is included which will drop the folder for you, and a 'Go To Templates Folder' action is included to help you un-drop the folder and navigate to it quickly.
+The plug-in prompts the user to select an existing folder that contains (or will contain) the projects to use as a basis for the projects that are created. As with Curt's original script, the folder may be set to 'dropped' and the plug-in should continue to work as expected. A 'Hide Templates Folder' action is included which will drop the folder for you, and a 'Go To Templates Folder' action is included to help you un-drop the folder and navigate to it quickly.
 
 Templates should be included as projects within that folder (but can be inside subfolders).
 
@@ -108,11 +108,11 @@ This action allows the user to set the preferences for the plug-in. Currently, t
 
 # Functions
 
-This plugin contains the following functions within the `templateLibrary` library:
+This plug-in contains the following functions within the `templateLibrary` library:
 
 ## `loadSyncedPrefs () : SyncedPref`
 
-This function returns the synced preferences instance for the plugin.
+This function returns the synced preferences instance for the plug-in.
 
 ## `getTemplateFolder () : Folder`
 
