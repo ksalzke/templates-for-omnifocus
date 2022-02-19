@@ -1,3 +1,17 @@
+# [1.16.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.15.0...v1.16.0) (2022-02-19)
+
+
+### Bug Fixes
+
+* :bug: don't show active projects inside dropped folders in destination list ([8c406a6](https://github.com/ksalzke/templates-for-omnifocus/commit/8c406a688384c42248e0299994f7f6342c4ca35b)), closes [#27](https://github.com/ksalzke/templates-for-omnifocus/issues/27)
+
+
+### Features
+
+* :sparkles: don't show 'on hold' templates in drop down for 'Create From Template' action enhancement ([dbc1c38](https://github.com/ksalzke/templates-for-omnifocus/commit/dbc1c389dbc202b6c184dd0e9271e2ecd00621f2))
+
+
+
 # [1.15.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.14.0...v1.15.0) (2022-02-19)
 
 
