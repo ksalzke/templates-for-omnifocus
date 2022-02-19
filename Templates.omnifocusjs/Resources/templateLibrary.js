@@ -50,12 +50,8 @@
       let projectsBoxChecked = false
       destinationForm.addField(new Form.Field.Checkbox('projectsIncluded', 'Include projects', projectsBoxChecked))
       // destination dropdown
-      const activeSections = flattenedSections.filter(
-        (section) =>
-          section.status === Folder.Status.Active ||
-          section.status === Project.Status.Active
-      )
-      const activeFolders = flattenedFolders.filter(folder => folder.status === Folder.Status.Active)
+      const activeSections = flattenedSections.filter(section => section.effectiveActive === true || section instanceof Project && section.task.effectiveActive === true)
+      const activeFolders = flattenedFolders.filter(folder => folder.effectiveActive === true)
 
       function updateDestinationDropdown (sections) {
         const sortedSections = preferences.readBoolean('sortLocationsAlphabetically') ? sections.sort((a, b) => a.name > b.name) : sections
