@@ -1,3 +1,13 @@
+# [1.15.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.14.0...v1.15.0) (2022-02-19)
+
+
+### Features
+
+* :lipstick: rename 'Preferences' to 'Preferences: Templates' ([965b7e3](https://github.com/ksalzke/templates-for-omnifocus/commit/965b7e3879c0c21f84a0e2356100763dd886fbe4))
+* :lipstick: update validation and remove 'alwaysEnable' pref - now always available ([35c94fb](https://github.com/ksalzke/templates-for-omnifocus/commit/35c94fb1c3fa22d8e8b957bbe0bd23cc023456a5))
+
+
+
 # [1.14.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.13.0...v1.14.0) (2021-11-14)
 
 
