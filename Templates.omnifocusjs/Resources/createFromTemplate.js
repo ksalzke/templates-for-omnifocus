@@ -20,7 +20,7 @@
     async function generateTemplateForm () {
       // select template to use and destination - show form
       const templateFolder = await templateLibrary.getTemplateFolder()
-      const templateProjects = templateFolder.flattenedProjects
+      const templateProjects = templateFolder.flattenedProjects.filter(project => project.status === Project.Status.Active)
 
       const templateForm = new Form()
       templateForm.addField(
