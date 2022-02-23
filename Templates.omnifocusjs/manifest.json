@@ -3,7 +3,7 @@
   "identifier": "com.KaitlinSalzke.Templates",
   "author": "Kaitlin Salzke",
   "description": "An OmniFocus plug-in that enables projects to be created from templates",
-  "version": "1.16.0",
+  "version": "1.16.1",
   "actions": [
     {
       "identifier": "createFromTemplate",

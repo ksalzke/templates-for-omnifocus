@@ -1,3 +1,12 @@
+## [1.16.1](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.16.0...v1.16.1) (2022-02-23)
+
+
+### Bug Fixes
+
+* :bug: make projects active after creation even if destination is not a Project instance ([a66fc3b](https://github.com/ksalzke/templates-for-omnifocus/commit/a66fc3b82f0dc0464bf66095b203eec94e273e7f))
+
+
+
 # [1.16.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.15.0...v1.16.0) (2022-02-19)
 
 
