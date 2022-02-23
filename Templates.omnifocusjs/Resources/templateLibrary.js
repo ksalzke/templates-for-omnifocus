@@ -106,7 +106,6 @@
     if (destination instanceof Folder) {
       created = duplicateSections([template], destination)[0]
       project = created
-      project.status = Project.Status.Active // make status active if not already
     } else if (destination instanceof Project) {
       created = duplicateTasks([template.task], destination)[0]
       project = destination
@@ -117,6 +116,8 @@
       created = duplicateSections([template], destination)[0]
       project = created
     }
+
+    if (created instanceof Project) created.status = Project.Status.Active // make status active if not already active
 
     // ASK ABOUT OPTIONAL TASKS
     const optTasks = created.flattenedTasks.filter(task => task.note.includes('$OPTIONAL'))
