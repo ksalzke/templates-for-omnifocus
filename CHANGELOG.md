@@ -1,3 +1,12 @@
+## [1.16.2](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.16.1...v1.16.2) (2022-03-06)
+
+
+### Bug Fixes
+
+* :bug: don't include templates folder and subfolders in destination list ([da2d58b](https://github.com/ksalzke/templates-for-omnifocus/commit/da2d58b2e4faff006b2a2f27759051e45468e57c))
+
+
+
 ## [1.16.1](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.16.0...v1.16.1) (2022-02-23)
 
 
