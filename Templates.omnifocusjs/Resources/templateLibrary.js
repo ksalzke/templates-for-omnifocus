@@ -37,6 +37,7 @@
 
   templateLibrary.getDestination = async (template) => {
     const preferences = new Preferences('com.KaitlinSalzke.Templates')
+    const templateFolder = await templateLibrary.getTemplateFolder()
 
     // find folder from string, if there is a destination
     const match = template.note.match(/\$FOLDER=(.*?)$/m)
@@ -50,8 +51,8 @@
       let projectsBoxChecked = false
       destinationForm.addField(new Form.Field.Checkbox('projectsIncluded', 'Include projects', projectsBoxChecked))
       // destination dropdown
-      const activeSections = flattenedSections.filter(section => section.effectiveActive === true || section instanceof Project && section.task.effectiveActive === true)
-      const activeFolders = flattenedFolders.filter(folder => folder.effectiveActive === true)
+      const activeSections = flattenedSections.filter(section => (section.effectiveActive === true || (section instanceof Project && section.task.effectiveActive === true)) && section !== templateFolder && !templateFolder.flattenedSections.includes(section))
+      const activeFolders = flattenedFolders.filter(folder => folder.effectiveActive === true && folder !== templateFolder && !templateFolder.flattenedFolders.includes(folder))
 
       function updateDestinationDropdown (sections) {
         const sortedSections = preferences.readBoolean('sortLocationsAlphabetically') ? sections.sort((a, b) => a.name > b.name) : sections
