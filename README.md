@@ -122,7 +122,7 @@ This asynchronous function returns the folder that is currently set as the folde
 
 This asynchronous function takes a template as input and returns the parent folder or project to be used for the new project. It first looks for a line in the format `$FOLDER=Folder` in the template project's note, and if this is not found prompts the user to select from a list of active folders. The user may also select the "Include projects" checkbox to include active projects in the listing, or select 'Top Level' to add the project at the root level, outside of any folders.
 
-## `createFromTemplate (template: Task, destination: Folder | Project | Task | Folder.ChildInsertionLocation) : Project | Task`
+## `createFromTemplate (template: Task, destination: Folder | Project | Task | Folder.ChildInsertionLocation | Task.ChildInsertionLocation) : Project | Task`
 
 This asynchronous function takes a template and a destination (a folder or project) as input. It:
 
