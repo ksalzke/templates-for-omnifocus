@@ -1,3 +1,12 @@
+# [1.17.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.16.2...v1.17.0) (2022-06-11)
+
+
+### Features
+
+* :sparkles: enable createFromTemplate destination to be of type Task.ChildInsertionLocation ([bb6a134](https://github.com/ksalzke/templates-for-omnifocus/commit/bb6a13421885d4fbded18d83b6c740458ccae5f0))
+
+
+
 ## [1.16.2](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.16.1...v1.16.2) (2022-03-06)
 
 
