@@ -23,9 +23,7 @@
       const templateProjects = templateFolder.flattenedProjects.filter(project => {
       	let isOnHold = preferences.readBoolean('includeOnHoldProjects') && project.status === Project.Status.OnHold
       	let isActive = project.status === Project.Status.Active
-      	
-      	console.log("On Hold: ", isOnHold)
-      
+      	      
       	return isActive || isOnHold
       })
 
