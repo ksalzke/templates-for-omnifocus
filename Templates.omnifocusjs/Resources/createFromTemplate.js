@@ -20,7 +20,14 @@
     async function generateTemplateForm () {
       // select template to use and destination - show form
       const templateFolder = await templateLibrary.getTemplateFolder()
-      const templateProjects = templateFolder.flattenedProjects.filter(project => project.status === Project.Status.Active)
+      const templateProjects = templateFolder.flattenedProjects.filter(project => {
+      	let isOnHold = preferences.readBoolean('includeOnHoldProjects') && project.status === Project.Status.OnHold
+      	let isActive = project.status === Project.Status.Active
+      	
+      	console.log("On Hold: ", isOnHold)
+      
+      	return isActive || isOnHold
+      })
 
       const templateForm = new Form()
       templateForm.addField(
