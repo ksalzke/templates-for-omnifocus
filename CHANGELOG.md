@@ -1,3 +1,12 @@
+# [1.18.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.17.0...v1.18.0) (2022-10-02)
+
+
+### Features
+
+* :sparkles: add preference to include/exclude on-hold templates   ([b532236](https://github.com/ksalzke/templates-for-omnifocus/commit/b5322364faf108fc8c61bd6e11ca096b1e099612)), closes [#31](https://github.com/ksalzke/templates-for-omnifocus/issues/31)
+
+
+
 # [1.17.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.16.2...v1.17.0) (2022-06-11)
 
 
