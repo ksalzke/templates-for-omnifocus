@@ -64,6 +64,8 @@ This action can be run at any time on macOS. It can optionally only be run when 
 The user is prompted to select a template (from the projects included in the templates folder). If a template project is already selected, the prompt is not shown and the selected template is used.
 ![Prompt to choose template](https://user-images.githubusercontent.com/16893787/142519500-f0c0e1f3-8c89-4825-9dde-413660b19e6b.png)
 
+Optionally, on-hold templates can be excluded from this list; this setting is located in Preferences.
+
 ### 2. Select a destination _(if applicable)_
 
 The `getDestination` function is used to determine where the new project should be created. (This skips the below dialogue if a folder is specified in the note, as in our example template above.)
@@ -105,6 +107,8 @@ This action allows the user to set the preferences for the plug-in. Currently, t
 * **'Auto-select 'Go to created project' when creating from template** _Please note that this setting is device-specific and does not sync between devices._
 
 * **Sort folder/project list alphabetically (instead of in OmniFocus order)** _Please note that this setting is device-specific and does not sync between devices._
+
+* **Include On-Hold template projects** Determines whether on-hold template projects are included in the dropdown list when the 'Create From Template' action is run. (Defaults to included.)
 
 # Functions
 
