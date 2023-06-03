@@ -1,3 +1,12 @@
+# [1.19.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.18.0...v1.19.0) (2023-06-03)
+
+
+### Features
+
+* :sparkles: set the next review date of newly-created projects ([#43](https://github.com/ksalzke/templates-for-omnifocus/issues/43)) ([103ce55](https://github.com/ksalzke/templates-for-omnifocus/commit/103ce5587208cf36d9cfe5afd3cb26cd9fac6e8c))
+
+
+
 # [1.18.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.17.0...v1.18.0) (2022-10-02)
 
 
