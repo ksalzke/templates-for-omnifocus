@@ -115,7 +115,32 @@
       project = created.containingProject
     }
 
-    if (created instanceof Project) created.status = Project.Status.Active // make status active if not already active
+    if (created instanceof Project) {
+      created.status = Project.Status.Active; // make status active if not already active
+
+      // Set the review date to today plus the review interval, on the
+      // assumption that the user is probably going to review the project as
+      // soon as it's created.  If we don't do this, the review date of the
+      // original project will be used instead, which might be far in the past
+      // (e.g. when the template was first created).
+      const ri = created.reviewInterval;
+      const nextReviewDate = new Date();
+      switch (ri.unit) {
+        case 'days':
+          nextReviewDate.setDate(nextReviewDate.getDate() + ri.steps);
+          break;
+        case 'weeks':
+          nextReviewDate.setDate(nextReviewDate.getDate() + 7 * ri.steps);
+          break;
+        case 'months':
+          nextReviewDate.setMonth(nextReviewDate.getMonth() + ri.steps);
+          break;
+        case 'years':
+          nextReviewDate.setFullYear(nextReviewDate.getFullYear() + ri.steps);
+          break;
+      }
+      created.nextReviewDate = nextReviewDate;
+    }
 
     // ASK ABOUT OPTIONAL TASKS
     const optTasks = created.flattenedTasks.filter(task => task.note.includes('$OPTIONAL'))
