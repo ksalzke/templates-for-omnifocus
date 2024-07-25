@@ -35,7 +35,7 @@
     } else {
         // Get the selected item
         const selectedItem = selectedItems[0];
-
+        
         const validConstructors = ['Project', 'Folder', 'Task'];
         if (!validConstructors.includes(selectedItem.constructor.name)) {
           const alert = new Alert("Invalid Selection", 'Select a project or folder to create a project from the template.');

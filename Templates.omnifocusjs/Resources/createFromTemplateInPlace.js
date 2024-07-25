@@ -10,6 +10,7 @@
       return;
     }
 
+
     const templateFolder = await templateLibrary.getTemplateFolder()
     let template = (selection.projects.length === 1 && templateFolder.flattenedProjects.includes(selection.projects[0])) ? selection.projects[0] : null
 
