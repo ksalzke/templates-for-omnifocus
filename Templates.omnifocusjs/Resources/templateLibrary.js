@@ -17,6 +17,37 @@
     }
   }
 
+  templateLibrary.getSelectedProjectOrFolder = async (selection) => {
+    // Get the currently selected item(s)
+    const selectedItems = selection.databaseObjects;
+
+    if (selectedItems.length === 0) {
+        // If no items are selected, throw an alert
+        const alert = new Alert("No Items Selected", 'Select an item to create a project from the template.');
+        await alert.show();
+        return null;
+    } else if (selectedItems.length > 1) {
+        // Thow an alert if multiple items are selected
+        // TODO - Add option to create a project for each selected item
+        const alert = new Alert("Multiple Items Selected", 'Select only one item to create a project from the template.');
+        await alert.show();
+        return null;
+    } else {
+        // Get the selected item
+        const selectedItem = selectedItems[0];
+        
+        const validConstructors = ['Project', 'Folder', 'Task'];
+        if (!validConstructors.includes(selectedItem.constructor.name)) {
+          const alert = new Alert("Invalid Selection", 'Select a project or folder to create a project from the template.');
+          await alert.show();
+          return null;
+        } else {
+          return selectedItem;
+        }
+    }
+  }
+
+
   templateLibrary.getTemplateFolder = async () => {
     // get ID from preferences
     const syncedPrefs = templateLibrary.loadSyncedPrefs()
