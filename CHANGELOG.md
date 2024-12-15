@@ -1,3 +1,12 @@
+## [1.19.1](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.19.0...v1.19.1) (2024-12-15)
+
+
+### Bug Fixes
+
+* :bug: check that there is a selection before checking for selected template ([e2dc6c1](https://github.com/ksalzke/templates-for-omnifocus/commit/e2dc6c106fe2a21f166cef9f27b57142cc6f496b))
+
+
+
 # [1.19.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.18.0...v1.19.0) (2023-06-03)
 
 
