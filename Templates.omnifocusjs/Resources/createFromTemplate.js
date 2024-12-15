@@ -5,7 +5,7 @@
     const preferences = new Preferences('com.KaitlinSalzke.Templates')
 
     const templateFolder = await templateLibrary.getTemplateFolder()
-    let template = (selection.projects.length === 1 && templateFolder.flattenedProjects.includes(selection.projects[0])) ? selection.projects[0] : null
+    let template = (selection && selection.projects.length === 1 && templateFolder.flattenedProjects.includes(selection.projects[0])) ? selection.projects[0] : null
 
     const templateForm = await generateTemplateForm()
     if (template === null) {
@@ -15,16 +15,16 @@
 
     const destination = await templateLibrary.getDestination(template)
     const created = await templateLibrary.createFromTemplate(template, destination)
-    if (templateForm.values.goTo) URL.fromString('omnifocus:///task/' + created.id.primaryKey).call(() => {})
+    if (templateForm.values.goTo) URL.fromString('omnifocus:///task/' + created.id.primaryKey).call(() => { })
 
-    async function generateTemplateForm () {
+    async function generateTemplateForm() {
       // select template to use and destination - show form
       const templateFolder = await templateLibrary.getTemplateFolder()
       const templateProjects = templateFolder.flattenedProjects.filter(project => {
-      	let isOnHold = preferences.readBoolean('includeOnHoldProjects') && project.status === Project.Status.OnHold
-      	let isActive = project.status === Project.Status.Active
-      	      
-      	return isActive || isOnHold
+        let isOnHold = preferences.readBoolean('includeOnHoldProjects') && project.status === Project.Status.OnHold
+        let isActive = project.status === Project.Status.Active
+
+        return isActive || isOnHold
       })
 
       const templateForm = new Form()
