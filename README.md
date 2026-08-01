@@ -86,6 +86,10 @@ The `getDestination` function is used to determine where the new project should 
 
 If the `Go to created project` checkbox is selected, takes the user to the created project.
 
+## Create From Template In Place
+
+This action can be run when a folder, project, or task is selected. It uses the selected location as the destination, but otherwise works the same as the 'Create From Template' action.
+
 ## Go To Templates Folder
 
 This action navigates to the Templates folder and, if it is dropped, makes it active so that any templates contained within it are visible. (Note that, on iOS, if a focus is set that renders the templates folder hidden, it will not be unhidden unless you first leave the focused mode.)
