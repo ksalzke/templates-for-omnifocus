@@ -1,3 +1,12 @@
+# [1.20.0](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.19.1...v1.20.0) (2026-08-01)
+
+
+### Features
+
+* :sparkles: add template 'in place' functionality ([#46](https://github.com/ksalzke/templates-for-omnifocus/issues/46)) ([3358715](https://github.com/ksalzke/templates-for-omnifocus/commit/335871590a90999aeaa616c2764c84beb625c3c2)), closes [#39](https://github.com/ksalzke/templates-for-omnifocus/issues/39) [#35](https://github.com/ksalzke/templates-for-omnifocus/issues/35)
+
+
+
 ## [1.19.1](https://github.com/ksalzke/templates-for-omnifocus/compare/v1.19.0...v1.19.1) (2024-12-15)
 
 
